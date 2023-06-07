@@ -4,7 +4,8 @@ require('dotenv').config({ path: '.env' });
 
 const mongoose = require("mongoose");
 const uri = process.env.URI
-const uri_cluster = process.env.URI_CLUSTER
+const uri_cluster = "mongodb+srv://sa:sa@cluster0.gkmmhep.mongodb.net/thi_trac_nghiem?retryWrites=true&w=majority"
+
 
 console.log(uri_cluster)
 
