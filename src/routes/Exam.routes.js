@@ -7,11 +7,16 @@ const ObjectId = require("../validators/ObjectId.validator");
 const requestValidator = require("../validators/Request.validator");
 // exam
 //create new exam
-router.post("/", AuthMiddlewares.isAuth, requestValidator(ExamSchema.create), ExamController.create);
+router.post(
+  "/",
+  AuthMiddlewares.isAuth,
+  requestValidator(ExamSchema.create, "body"),
+  ExamController.create
+);
 // get all exams
 router.get("/all", ExamController.getAll);
 // get exam
-router.get("/:id", ObjectId, ExamController.get);
+router.get("/:_id", ObjectId, ExamController.get);
 //update exam
 router.patch(
   "/:_id",

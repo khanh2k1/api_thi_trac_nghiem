@@ -23,9 +23,9 @@ const ExamController = {
 
   // get a exam
   get: async (req, res) => {
-    const id = await req.params.id;
+    const _id = await req.params._id;
 
-    const exam = await ExamModel.findOne({ _id: id });
+    const exam = await ExamModel.findOne({ _id });
 
     if (!exam) {
       return res.status(404).json({
@@ -52,12 +52,12 @@ const ExamController = {
 
   // create a exam
   create: async (req, res) => {
-   
-    let exam = await ExamModel(req.body.exam);
+  
+    let exam = await ExamModel(req.body);
     exam["createdBy"] = req.user._id;
     exam["examId"] = ExamUtils.generateId();
 
-    console.log(req.body.exam.correctAnswers)
+    console.log(req.body.correctAnswers)
 
     await exam.save().then((data) => {
       console.log("create exam successfully");

@@ -6,6 +6,7 @@ const compression = require("compression");
 const UserRoutes = require('./routes/User.routes')
 const ExamRoutes = require('./routes/Exam.routes')
 const AuthRoutes = require('./routes/Auth.routes')
+const ResultRoutes = require('./routes/Result.routes')
 const cors = require('cors')
 
 // middlewares
@@ -27,7 +28,7 @@ app.use(cors())
 app.use('/v1/exam/', ExamRoutes)
 app.use('/v1/', AuthRoutes)
 app.use('/v1/user/', UserRoutes)
-
+app.use('/v1/result/', ResultRoutes)
 
 
 module.exports = app;

@@ -5,22 +5,18 @@ const ResultSchema = mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
       ref: "User",
     },
     exam: {
       type: ExamModel.schema,
-      required: true,
     },
     userAnswers: [
       {
-        type: number,
-        required: true,
+        type: Number,
       },
     ],
     timeFinish: {
-      type: number,
-      require: true,
+      type: Number,
     },
   },
   {

@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const jwtVariable = require('../variables/jwt')
 const UserModel = require('../model/User.model');
 const promisify = require('util').promisify;
 const crypto = require("crypto")
