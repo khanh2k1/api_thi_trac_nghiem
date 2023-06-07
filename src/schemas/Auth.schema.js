@@ -4,6 +4,7 @@ const AuthSchema = {
     register : joi.object({
         firstname: joi.string().required().min(2),
         lastname: joi.string().required().min(2),
+        email: joi.string().email().required(),
         username: joi.string().required().min(6),
         password: joi.string().min(6).required()
     }),

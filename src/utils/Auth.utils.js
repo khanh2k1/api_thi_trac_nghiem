@@ -36,7 +36,7 @@ const AuthUtils = {
     decodeToken : async (token, secretKey) => {
         try {
             return await verify(token, secretKey, {
-                ignoreExpiration: true,
+                ignoreExpiration: true, // bỏ qua hết hạn
             });
         } catch (error) {
             console.log(`Error in decode access token: ${error}`);
@@ -48,13 +48,19 @@ const AuthUtils = {
         // Lấy access token từ header
         const accessTokenFromHeader = req.headers.x_authorization;
         if (!accessTokenFromHeader) {
-            return res.status(400).send('Không tìm thấy access token.');
+            return res.status(400).json({
+                success:false,
+                message:'Access token is not found'
+            });
         }
     
         // Lấy refresh token từ body
         const refreshTokenFromBody = req.body.refreshToken;
         if (!refreshTokenFromBody) {
-            return res.status(400).send('Không tìm thấy refresh token.');
+            return res.status(400).json({
+                success:false,
+                message:'Refresh token is not found'
+            });
         }
     
         const accessTokenSecret =
@@ -68,18 +74,25 @@ const AuthUtils = {
             accessTokenSecret,
         );
         if (!decoded) {
-            return res.status(400).send('Access token không hợp lệ.');
+            return res.status(400).json({
+                success:false,
+                message:'Access token is invalid'
+            });
         }
     
         const username = decoded.payload.username; // Lấy username từ payload
     
         const user = await UserModel.findOne({username: username});
+
         if (!user) {
             return res.status(401).send('User không tồn tại.');
         }
     
         if (refreshTokenFromBody !== user.refreshToken) {
-            return res.status(400).send('Refresh token không hợp lệ.');
+            return res.status(400).json({
+                success:false,
+                message:'Refresh token is invalid'
+            });
         }
     
         // Tạo access token mới
@@ -103,9 +116,8 @@ const AuthUtils = {
     },
 
     // void
-    hashToPassword : async (password) => {
-        const hashedPassword = await crypto.createHash("sha256").update(password).digest("hex");
-        console.log(`hashed pw = ${hashedPassword}`)
+    hashToPassword : (password) => {
+        const hashedPassword = crypto.createHash("sha256").update(password).digest("hex");
         return hashedPassword;
     },
 
@@ -121,9 +133,6 @@ const AuthUtils = {
         )
 
         console.log('isValidPassword :', isValidPassword)
-
-        
-
 
         if(isValidPassword) return true 
 

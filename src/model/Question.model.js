@@ -16,10 +16,6 @@ const QuestionSchema = mongoose.Schema(
         required: true,
       },
     ],
-    correctAnswer: {
-      type: Number,
-      required: true,
-    },
   },
   {
     timestamps: true,
