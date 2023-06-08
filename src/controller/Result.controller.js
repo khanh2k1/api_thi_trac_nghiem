@@ -44,8 +44,8 @@ const ResultController = {
     //     message: "result not found !"
     //   })
     // }
-
-    await ResultModel.findById({ _id })
+    
+    await ResultModel.findById({ _id }, {})
       .then((data) => {
         console.log(`results get-all = ${data}`);
         res.json({

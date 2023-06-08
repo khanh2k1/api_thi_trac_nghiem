@@ -54,6 +54,8 @@ const ExamController = {
   create: async (req, res) => {
   
     let exam = await ExamModel(req.body);
+    const image = req.file.buffer
+    exam['image'] = image
     exam["createdBy"] = req.user._id;
     exam["examId"] = ExamUtils.generateId();
 

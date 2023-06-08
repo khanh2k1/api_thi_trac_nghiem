@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const QuestionModel = require("./Question.model");
-const ImageModel = require('./Image.model')
+const FileUtils = require('../utils/File.utils')
 // Tạo schema bài thi
 const ExamSchema = mongoose.Schema(
   {
@@ -15,6 +15,7 @@ const ExamSchema = mongoose.Schema(
     },
     image: {
       type: Buffer,
+      default: FileUtils.getDefaultImage()
     },
     description: {
       type: String,

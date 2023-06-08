@@ -60,6 +60,7 @@ const UserController = {
     const user = await req.user
     const {image, firstname, lastname} = await req.body
     
+    
     await UserModel.findOneAndUpdate(user._id, {image, firstname, lastname}).then(()=>{
       res.json({
         success:true,
