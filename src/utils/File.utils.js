@@ -15,4 +15,10 @@ const FileUtils = {
   }
 };
 
+const filePathImage = path.join('src','images','linh.jpg')
+
+const readFile = fs.readFileSync(filePathImage)
+
+console.log(readFile)
+
 module.exports = FileUtils;
