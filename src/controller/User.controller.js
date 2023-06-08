@@ -8,10 +8,10 @@ const UserController = {
   getProfile: async (req, res) => {
     try {
       const user = await req.user
-      const { firstname, lastname, image, email, username } = await user;
+      const { _id, firstname, lastname, image, email, username } = await user;
       return res.json({
         success: true,
-        user: { firstname, lastname, email, username, image }
+        user: { _id, firstname, lastname, email, username, image }
       });
     }catch (error) {
       console.log(`error get profile : ${error}`);
