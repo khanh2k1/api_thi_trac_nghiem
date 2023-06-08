@@ -5,17 +5,18 @@ const ResultUtils = require("../utils/Result.utils");
 const ResultController = {
   getAll: async (req, res) => {
     try {
+      const userId = req.user._id
       // get correctAnswers and userAnswers
       let results_2 = [];
-      const results = await ResultModel.find();
+      const results = await ResultModel.find({userId});
 
       results.forEach((item) => {
-        const { correctAnswers, examId, name } = item["exam"];
+        const { correctAnswers, examId, name, description, _id } = item["exam"];
         const { userAnswers } = item;
         console.log(correctAnswers, userAnswers);
 
         const score = ResultUtils.calculateScore(correctAnswers, userAnswers);
-        const object = { score, examId, name };
+        const object = { score, examId, name, description, _id  };
 
         results_2.push(object);
       });
