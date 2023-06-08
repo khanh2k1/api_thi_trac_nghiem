@@ -1,9 +1,10 @@
 const ExamModel = require("../model/Exam.model");
 const ExamUtils = require("../utils/Exam.utils");
+const imageBuffer = require('../variables/imageBuffer')
 const ExamController = {
   // get all exam
   getAll: async (req, res) => {
-    await ExamModel.find({public: true})
+    await ExamModel.find({isPublic: true})
       .then((data) => {
         console.log("get exams successfully");
         res.json({
@@ -76,9 +77,9 @@ const ExamController = {
 
   // create a exam
   create: async (req, res) => {
-  
+    
     let exam = await ExamModel(req.body);
-    const image = req.file.buffer
+    const image = req.file.buffer || imageBuffer
     exam['image'] = image
     exam["createdBy"] = req.user._id;
     exam["examId"] = ExamUtils.generateId();
