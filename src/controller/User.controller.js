@@ -25,6 +25,13 @@ const UserController = {
     const old_password = await req.body.old_password;
 
     const isValid = AuthUtils.comparePassword(user, old_password, newPassword)
+
+    if(!isValid) {
+      return res.status(401).json({
+        success:false,
+        message: "Unauthorized"
+      })
+    }
     // update user
     const isSave = await UserModel.updateOne(
       { username: user.username },
@@ -42,6 +49,12 @@ const UserController = {
       message: `${user.username} is Change password successfully`,
     })
   },
+
+  update: async(req, res) => {
+    const user = await req.user;
+
+
+  }
 };
 
 module.exports = UserController;
