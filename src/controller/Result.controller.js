@@ -11,13 +11,12 @@ const ResultController = {
       const results = await ResultModel.find({userId});
 
       results.forEach((item) => {
-        const { correctAnswers, examId, name, description, _id } = item["exam"];
-        const { userAnswers } = item;
-        console.log(correctAnswers, userAnswers);
+        const { correctAnswers, examId, name, description } = item["exam"];
+        const { userAnswers, _id } = item;
+        
 
         const score = ResultUtils.calculateScore(correctAnswers, userAnswers);
         const object = { score, examId, name, description, _id  };
-
         results_2.push(object);
       });
 
@@ -37,6 +36,7 @@ const ResultController = {
 
   get: async (req, res) => {
     const _id = req.params._id;
+
     // const result = await ResultModel.findById(_id)
     // if(!result) {
     //   return res.status(404).json({
@@ -44,7 +44,7 @@ const ResultController = {
     //     message: "result not found !"
     //   })
     // }
-    
+
     await ResultModel.findById({ _id }, {})
       .then((data) => {
         console.log(`results get-all = ${data}`);

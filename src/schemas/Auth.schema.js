@@ -1,8 +1,7 @@
 const joi = require('joi')
-const ImageSchema = require('./Image.schema')
 const AuthSchema = {
     register : joi.object({
-        image: ImageSchema,
+        // image: ImageSchema,
         firstname: joi.string().required().min(2),
         lastname: joi.string().required().min(2),
         email: joi.string().email().required(),
