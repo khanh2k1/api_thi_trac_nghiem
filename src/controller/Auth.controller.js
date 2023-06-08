@@ -22,7 +22,7 @@ const AuthController = {
     const hashedPassword = AuthUtils.hashToPassword(req.body.password);
 
     const newUser = new UserModel({
-      image: imageBuffer || FileUtils.getDefaultImage(),
+      image: imageBuffer,
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.email,

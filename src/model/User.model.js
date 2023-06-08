@@ -1,13 +1,12 @@
 
 const mongoose = require("mongoose");
-const FileUtils = require('../utils/File.utils')
+
 
 // Tạo schema User
 const UserSchema = new mongoose.Schema(
   {
     image : {
       type: Buffer,
-      default: FileUtils.getDefaultImage()
     },
     firstname: {
       type: String,

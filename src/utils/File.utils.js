@@ -7,12 +7,6 @@ const path = require("path");
 const FileUtils = {
   upload: multer({ storage: storage }),
 
-  getDefaultImage: () => {
-    const filePath = path.join("src", "images", "linh.jpg");
-    const defaultImageBuffer = fs.readFileSync(filePath);
-
-    return defaultImageBuffer;
-  },
 };
 
 

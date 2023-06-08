@@ -43,7 +43,8 @@ const ExamController = {
   // get all exam which user created
   getByCreated: async (req, res) => {
     const createdBy = await req.user._id;
-    const exams = await ExamModel.find(createdBy);
+    console.log(createdBy)
+    const exams = await ExamModel.find({createdBy});
     res.json({
       success: true,
       exams,
