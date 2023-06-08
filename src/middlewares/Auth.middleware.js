@@ -34,7 +34,9 @@ const AuthMiddlewares = {
     
         const user = await UserModel.findOne({username: verified.payload.username});
         
-        req.user = user;
+        const { _id, firstname, lastname, image, email } = user
+        const newUser = { _id, firstname, lastname, image, email } 
+        req.user = newUser;
         
         return next();
     },
