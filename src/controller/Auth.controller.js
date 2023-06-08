@@ -54,21 +54,23 @@ const AuthController = {
     const username = req.body.username.toLowerCase();
     const password = req.body.password;
 
-    const hashedPassword = await AuthUtils.hashToPassword(password);
+    const user = await UserModel.findOne({username});
 
-    console.log(username, hashedPassword);
-
-    const user = await UserModel.findOne({
-      username,
-      password: hashedPassword,
-    });
-
-    console.log(`user = ${user}`);
+    
 
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: "invalid username or password",
+        message: "Unauthorized",
+      });
+    }
+
+    const isMatch = AuthUtils.comparePassword(password, user.password)
+   
+    if(!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
       });
     }
 

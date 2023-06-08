@@ -1,17 +1,19 @@
 const UserModel = require("../model/User.model");
 const AuthUtils = require('../utils/Auth.utils')
+const bcrypt = require('bcrypt')
 // profile
 // update profile
 // change password
 const UserController = {
   getProfile: async (req, res) => {
     try {
-      const user = await req.user;
+      const user = await req.user
+      const { firstname, lastname, image, email, username } = await user;
       return res.json({
         success: true,
-        user,
+        user: { firstname, lastname, email, username, image }
       });
-    } catch (error) {
+    }catch (error) {
       console.log(`error get profile : ${error}`);
       res.status(422).json({
         success: false,
@@ -23,8 +25,9 @@ const UserController = {
   changePassword: async (req, res) => {
     const user = await req.user;
     const old_password = await req.body.old_password;
+    const new_password = await req.body.new_password
+    const isValid = AuthUtils.comparePassword(old_password, user.password)
 
-    const isValid = AuthUtils.comparePassword(user, old_password, newPassword)
 
     if(!isValid) {
       return res.status(401).json({
@@ -33,6 +36,8 @@ const UserController = {
       })
     }
     // update user
+    const hashedPassword = AuthUtils.hashToPassword(new_password)
+
     const isSave = await UserModel.updateOne(
       { username: user.username },
       { $set: { password: hashedPassword } }
@@ -44,6 +49,7 @@ const UserController = {
         message: "Cant change password",
       });
     }
+
     res.json({
       success: true,
       message: `${user.username} is Change password successfully`,
@@ -51,9 +57,17 @@ const UserController = {
   },
 
   update: async(req, res) => {
-    const user = await req.user;
+    const user = await req.user
+    const {image, firstname, lastname} = await req.body
+    
+    await UserModel.findOneAndUpdate(user._id, {image, firstname, lastname}).then(()=>{
+      res.json({
+        success:true,
+        message:{image, firstname, lastname} 
+      })
+    })
 
-
+   
   }
 };
 

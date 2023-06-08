@@ -13,7 +13,9 @@ const AuthSchema = {
     login : joi.object({
         username: joi.string().required().min(6),
         password: joi.string().required().min(6)
-    })
+    }),
+
+    
 }
 
 

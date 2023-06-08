@@ -5,6 +5,7 @@ const promisify = require('util').promisify;
 const crypto = require("crypto")
 const sign = promisify(jwt.sign).bind(jwt);
 const verify = promisify(jwt.verify).bind(jwt);
+const bcrypt = require('bcrypt')
 
 const AuthUtils = {
     generateToken : async (payload, secretSignature, tokenLife) => {
@@ -118,27 +119,27 @@ const AuthUtils = {
 
     // void
     hashToPassword : (password) => {
-        const hashedPassword = crypto.createHash("sha256").update(password).digest("hex");
-        return hashedPassword;
+        try {
+            const saltRounds = 10;
+            const hashedPassword = bcrypt.hashSync(password, saltRounds);
+            return hashedPassword;
+          } catch (error) {
+            // Xử lý lỗi nếu có
+            throw new Error('Lỗi khi hash mật khẩu');
+          }
     },
 
     // return boolean
-    comparePassword : async (user, oldPassword, newPassword) => {
+    comparePassword : async (password, hashedPassword) => {
         
+        const isMatch = bcrypt.compareSync(password, hashedPassword)
 
-        const old_hashed_password = await AuthUtils.hashToPassword(oldPassword) 
-        const username = user['username']
-        const isValidPassword = await UserModel.findOne
-        (
-            {username, old_hashed_password}
-        )
-
-        console.log('isValidPassword :', isValidPassword)
-
-        if(isValidPassword) return true 
+        if(isMatch) return true 
 
         return false
     }
 }
+
+
 
 module.exports = AuthUtils
