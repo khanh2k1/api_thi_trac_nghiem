@@ -92,9 +92,10 @@ const ExamController = {
 
     await exam.save().then((data) => {
       console.log("create exam successfully");
+      
       res.json({
         success: true,
-        message: "create a new exam successfully",
+        message: "create a new exam successfully", data
       });
     }).catch(err=>{
       console.log('error create exam', err)
