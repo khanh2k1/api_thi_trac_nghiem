@@ -14,9 +14,14 @@ const AuthController = {
       });
     }
 
-    const hashedPassword = await AuthUtils.hashToPassword(req.body.password);
+    // image 
+    const imageBuffer = req.file.buffer;
+
+    // hash password
+    const hashedPassword = AuthUtils.hashToPassword(req.body.password);
 
     const newUser = new UserModel({
+      image: imageBuffer,
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.email,
@@ -24,21 +29,20 @@ const AuthController = {
       password: hashedPassword,
     });
 
-    console.log(newUser);
 
     await newUser
       .save()
       .then((data) => {
         console.log("register successfully !");
-        console.log(data);
-        const { password, ...result } = data["_doc"];
+        const { password, image, ...result } = data["_doc"];
+        console.log(result)
         return res.json({
           success: true,
           result,
         });
       })
       .catch((error) => {
-        console.log("error register user");
+        console.log("error register user", error);
         res.status(422).json({
           success: false,
           message: error,
@@ -54,9 +58,12 @@ const AuthController = {
 
     console.log(username, hashedPassword);
 
-    const user = await UserModel.findOne({username, password:hashedPassword})
+    const user = await UserModel.findOne({
+      username,
+      password: hashedPassword,
+    });
 
-    console.log(`user = ${user}`)
+    console.log(`user = ${user}`);
 
     if (!user) {
       return res.status(401).json({
@@ -79,12 +86,10 @@ const AuthController = {
       accessTokenLife
     );
     if (!accessToken) {
-      return res
-        .status(401)
-        return res.status(401).json({
-          success: false,
-          message: "Login failed, please try again !",
-        });
+      return res.status(401).json({
+        success: false,
+        message: "Login failed, please try again !",
+      });
     }
 
     let refreshToken = randToken.generate(jwtVariable.refreshTokenSize); // tạo 1 refresh token ngẫu nhiên
@@ -104,7 +109,6 @@ const AuthController = {
       message: "Login successfully !",
       refreshToken,
       accessToken,
-
     });
   },
 
@@ -137,7 +141,7 @@ const AuthController = {
 
     const username = decoded.payload.username; // Lấy username từ payload
 
-    const user = await UserModel.findOne({username});
+    const user = await UserModel.findOne({ username });
     if (!user) {
       return res.status(401).send("User không tồn tại.");
     }

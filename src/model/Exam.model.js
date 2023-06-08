@@ -14,7 +14,7 @@ const ExamSchema = mongoose.Schema(
       type:Number,
     },
     image: {
-      type: ImageModel.schema,
+      type: Buffer,
     },
     description: {
       type: String,

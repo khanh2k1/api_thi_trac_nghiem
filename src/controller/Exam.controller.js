@@ -41,9 +41,9 @@ const ExamController = {
   },
 
   // get all exam which user created
-  getByUsername: async (req, res) => {
-    const username = await req.username;
-    const exams = await ExamModel.find({ createdBy: username });
+  getByCreated: async (req, res) => {
+    const createdBy = await req.user._id;
+    const exams = await ExamModel.find(createdBy);
     res.json({
       success: true,
       exams,
@@ -147,9 +147,9 @@ const ExamController = {
 
   // delete a exam
   deleteExam: async (req, res) => {
-    const id = req.body.id;
+    const createdBy = req.user._id;
 
-    await ExamModel.findByIdAndDelete(id)
+    await ExamModel.findOnedAndDelete(createdBy)
       .then(() => {
         res.json({
           success: true,

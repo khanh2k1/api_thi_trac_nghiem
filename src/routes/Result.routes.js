@@ -5,6 +5,7 @@ const ResultSchema = require("../schemas/Result.schema");
 const ObjectId = require("../validators/ObjectId.validator");
 const requestValidator = require("../validators/Request.validator");
 
+
 router.get("/:_id", AuthMiddlewares.isAuth, ObjectId, ResultController.get);
 
 router.get("/", AuthMiddlewares.isAuth, ResultController.getAll);

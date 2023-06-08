@@ -4,11 +4,11 @@ const ResultUtils = require("../utils/Result.utils");
 
 const ResultController = {
   getAll: async (req, res) => {
-    const results = await ResultModel.find();
-
     try {
       // get correctAnswers and userAnswers
       let results_2 = [];
+      const results = await ResultModel.find();
+
       results.forEach((item) => {
         const { correctAnswers, examId, name } = item["exam"];
         const { userAnswers } = item;
@@ -44,7 +44,7 @@ const ResultController = {
     //   })
     // }
 
-    await ResultModel.findById({_id})
+    await ResultModel.findById({ _id })
       .then((data) => {
         console.log(`results get-all = ${data}`);
         res.json({
@@ -63,9 +63,15 @@ const ResultController = {
 
   create: async (req, res) => {
     let result = await ResultModel(req.body);
-    result["userId"] = req.user._id;
 
-    console.log(result["userId"]);
+    // check user id
+    const userId = req.body.userId;
+    if (userId != req.user._id) {
+      return res.status(422).json({
+        success: false,
+        message: "invalid user id !",
+      });
+    }
 
     await result
       .save()

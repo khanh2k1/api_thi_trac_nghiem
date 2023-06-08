@@ -5,10 +5,15 @@ const AuthMiddlewares = require("../middlewares/Auth.middleware");
 const ExamSchema = require("../schemas/Exam.schema");
 const ObjectId = require("../validators/ObjectId.validator");
 const requestValidator = require("../validators/Request.validator");
+
+// CRUD image
+const FileUtils = require('../utils/File.utils')
+
 // exam
 //create new exam
 router.post(
   "/",
+  FileUtils.upload.single('image'), 
   AuthMiddlewares.isAuth,
   requestValidator(ExamSchema.create, "body"),
   ExamController.create
@@ -17,6 +22,9 @@ router.post(
 router.get("/all", ExamController.getAll);
 // get exam
 router.get("/:_id", ObjectId, ExamController.get);
+
+// get all exams which user created
+router.get("/", AuthMiddlewares.isAuth, ExamController.getByCreated)
 //update exam
 router.patch(
   "/:_id",

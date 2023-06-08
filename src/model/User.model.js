@@ -1,14 +1,13 @@
 const { Timestamp } = require("mongodb");
+const multer = require('multer');
 const mongoose = require("mongoose");
 const validate = require('mongoose-validator');
-const ImageSchema = require("../model/Image.model");
-const ImageModel = require('../model/Image.model')
+const ImageModel = require("./Image.model");
 // Tạo schema User
 const UserSchema = new mongoose.Schema(
   {
-    avatar : {
-      type: ImageModel.schema,
-      required:false,
+    image : {
+      type: Buffer,
     },
     firstname: {
       type: String,

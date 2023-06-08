@@ -1,8 +1,8 @@
 const requestValidator = (schema, property) => {
   return (req, res, next) => {
 
+    
     const object = req[property]
-    console.log(req[property])
     const { error } = schema.validate(object);
     
     if (!error) {
