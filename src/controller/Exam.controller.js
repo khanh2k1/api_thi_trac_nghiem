@@ -3,7 +3,7 @@ const ExamUtils = require("../utils/Exam.utils");
 const ExamController = {
   // get all exam
   getAll: async (req, res) => {
-    await ExamModel.find()
+    await ExamModel.find({public: true})
       .then((data) => {
         console.log("get exams successfully");
         res.json({
@@ -49,6 +49,29 @@ const ExamController = {
       success: true,
       exams,
     });
+  },
+
+  // get exam by examId
+  getExamByExamId : async(req, res) => {
+    const examId = req.body
+    if(!examId) {
+      return res.status(401).json({
+        success:false,
+        message:"invalid exam id"
+      })
+    }
+    const exam = await ExamModel.findOne({examId})
+    if(!exam) {
+      return res.status(404).json({
+        success:falses,
+        message: "not found exam"
+      })
+    }
+
+    res.json({
+      success:true,
+      message: exam
+    })
   },
 
   // create a exam

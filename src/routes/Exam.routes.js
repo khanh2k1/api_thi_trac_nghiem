@@ -18,6 +18,9 @@ router.post(
   requestValidator(ExamSchema.create, "body"),
   ExamController.create
 );
+
+// nhap examId de lay exam
+router.post('/:examId', ExamController.getExamByExamId)
 // get all exams
 router.get("/all", ExamController.getAll);
 // get exam
