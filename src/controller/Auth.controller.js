@@ -15,14 +15,14 @@ const AuthController = {
       });
     }
 
-    // // image 
-    // const imageBuffer = req.file.buffer;
+    // image 
+    const imageBuffer = req.file.buffer;
     
     // hash password
     const hashedPassword = AuthUtils.hashToPassword(req.body.password);
 
     const newUser = new UserModel({
-      image: FileUtils.getDefaultImage(),
+      image: imageBuffer || FileUtils.getDefaultImage(),
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.email,
@@ -30,6 +30,7 @@ const AuthController = {
       password: hashedPassword,
     });
 
+    console.log(newUser['image'])
 
     await newUser
       .save()

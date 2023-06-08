@@ -10,7 +10,10 @@ const FileUtils = require('../utils/File.utils')
 
 
 // routes auth
-router.post('/register', FileUtils.upload.single('image'), requestValidator(AuthSchema.register, "body"), AuthController.register)
+router.post('/register',
+ FileUtils.upload.single('image'), 
+requestValidator(AuthSchema.register, "body"),
+ AuthController.register)
 router.post('/login', requestValidator(AuthSchema.login, "body"), AuthController.login)
 router.post('/refresh', AuthController.refreshToken)
 
