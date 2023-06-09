@@ -71,22 +71,25 @@ const ExamController = {
       });
     }
 
-    const exam = await ExamModel.findOne({ examId });
-
-    if (!exam) {
-      return res.status(404).json({
-        success: false,
-        message: "not found",
+    await ExamModel.findOne({ examId }).then((data)=>{
+      const totalQuestions = data.questions.length
+      console.log(totalQuestions)
+      const {name, description, totalTime, _id} = data
+      const newExam = {_id, examId, name, description, totalTime, totalQuestions}
+      res.json({
+        success: true,
+        message: newExam
       });
-    }
+    }).catch(err=>{
+      console.log(err)
+      res.status(422).json({
+        success: false,
+        message: err,
+      });
+    })
 
-    const totalQuestions = exam.length
-    const {name, description, totalTime, _id} = exam
-    const newExam = {_id, examId, name, description, totalTime, totalQuestions}
-    res.json({
-      success: true,
-      message: newExam
-    });
+   
+   
   },
 
   // get all exam which user created
