@@ -11,6 +11,7 @@ const ExamController = {
         let exams = []
         data.forEach((item)=>{
           exams.push({ 
+            _id: item._id,
             examId: item.examId, 
             name: item.name, 
             description: item.description, 
@@ -73,8 +74,8 @@ const ExamController = {
     }
 
     const totalQuestions = exam.length
-    const {name, description, totalTime } = exam
-    const newExam = {name, description, totalTime, totalQuestions}
+    const {name, description, totalTime, examId } = exam
+    const newExam = {_id, examId, name, description, totalTime, totalQuestions}
     res.json({
       success: true,
       message: newExam
