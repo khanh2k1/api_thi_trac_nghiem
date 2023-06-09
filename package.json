@@ -21,6 +21,8 @@
     "express": "^4.18.2",
     "firebase-admin": "^11.8.0",
     "fs": "^0.0.1-security",
+    "google-auth-library": "^8.8.0",
+    "googleapis": "^118.0.0",
     "helmet": "^7.0.0",
     "joi": "^17.9.2",
     "joi-objectid": "^4.0.2",
@@ -36,6 +38,7 @@
     "rand-token": "^1.0.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.3",
+    "twilio": "^4.11.2",
     "util": "^0.12.5",
     "validator": "^13.9.0"
   }

@@ -87,9 +87,6 @@ const ExamController = {
         message: err,
       });
     })
-
-   
-   
   },
 
   // get all exam which user created
