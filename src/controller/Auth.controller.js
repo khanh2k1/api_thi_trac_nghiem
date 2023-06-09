@@ -61,8 +61,7 @@ const AuthController = {
 
     const user = await UserModel.findOne({username});
 
-    
-
+  
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -70,8 +69,9 @@ const AuthController = {
       });
     }
 
-    const isMatch = AuthUtils.comparePassword(password, user.password)
-   
+    const isMatch = await AuthUtils.comparePassword(password, user.password)
+    console.log('isMatch=',isMatch)
+
     if(!isMatch) {
       return res.status(401).json({
         success: false,

@@ -25,7 +25,8 @@ router.get('/search-by-examId/:examId', AuthMiddlewares.isAuth, ExamController.g
 router.get("/all", ExamController.getAll);
 // get exam
 router.get("/:_id", ObjectId, ExamController.get);
-
+// get info exam
+router.get("/info-exam/:_id", ObjectId, ExamController.getInfoExam)
 // get all exams which user created
 router.get("/", AuthMiddlewares.isAuth, ExamController.getByCreated)
 //update exam

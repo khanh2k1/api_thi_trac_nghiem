@@ -7,9 +7,27 @@ const ExamController = {
     await ExamModel.find({isPublic: true})
       .then((data) => {
         console.log("get exams successfully");
+        
+        let exams = []
+        data.forEach((item)=>{
+          exams.push({ 
+            examId: item.examId, 
+            name: item.name, 
+            description: item.description, 
+            totalQuestions: item.questions.length, 
+            totalTime: item.totalTime, 
+            image: item.image })
+
+            console.log(item.questions)
+            console.log("=================================================")
+        })
+
+       
+
         res.json({
           success: true,
-          message: data,
+          message: "get exams successfully",
+          exams
         });
       })
       .catch((error) => {
@@ -39,6 +57,29 @@ const ExamController = {
       success: true,
       message: exam,
     });
+  },
+
+  // get a info exam
+  getInfoExam: async(req, res) => {
+    const _id = await req.params._id;
+
+    const exam = await ExamModel.findOne({ _id });
+
+    if (!exam) {
+      return res.status(404).json({
+        success: false,
+        message: "not found",
+      });
+    }
+
+    const totalQuestions = exam.length
+    const {name, description, totalTime } = exam
+    const newExam = {name, description, totalTime, totalQuestions}
+    res.json({
+      success: true,
+      message: newExam
+    });
+
   },
 
   // get all exam which user created
