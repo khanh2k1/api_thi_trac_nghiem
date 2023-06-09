@@ -1,5 +1,8 @@
-module.exports = {
+
+const accessTokenLife = {
     accessTokenSecret: "access-token-secret-example",
-    accessTokenLife: "6000000s",
+    accessTokenLife: "1800s",
     refreshTokenSize: 100,
 }
+
+module.exports = accessTokenLife

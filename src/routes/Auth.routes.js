@@ -16,5 +16,5 @@ requestValidator(AuthSchema.register, "body"),
  AuthController.register)
 router.post('/login', requestValidator(AuthSchema.login, "body"), AuthController.login)
 router.post('/refresh', AuthController.refreshToken)
-
+// router.post('/send-otp', )
 module.exports = router

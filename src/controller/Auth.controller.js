@@ -3,7 +3,10 @@ const AuthUtils = require("../utils/Auth.utils");
 const jwtVariable = require("../variables/jwt");
 const UserModel = require("../model/User.model");
 const ImageBuffer = require('../variables/imageBuffer')
+const jwt = require('jsonwebtoken')
+const nodemailer = require('nodemailer')
 const AuthController = {
+
   register: async (req, res) => {
     const username = await req.body.username.toLowerCase();
     const user = await UserModel.findOne({ username: username });
@@ -173,6 +176,43 @@ const AuthController = {
       accessToken,
     });
   },
+
+  // sendOtp: async (req, res) => {
+  //   const email = req.body.email
+  //   const isExistedUser = await UserModel.findOne({email})
+  //   if(!isExistedUser) {
+  //     console.log('Not found user')
+  //     return res.status(401).json({
+  //       success:false,
+  //       message: "Unauthorized"
+  //     })
+  //   }
+
+  //   // generate OTP
+  //   const otp = Math.floor(100000 + Math.random() * 900000)
+
+  //   const accessTokenSecret =
+  //   process.env.ACCESS_TOKEN_SECRET || jwtVariable.accessTokenSecret;
+  //   // create token 
+  //   const tokenOTP = jwt.sign(otp, accessTokenSecret, {expiresIn: '5m'})
+
+  //   console.log(tokenOTP) 
+
+  //   // save into db 
+  //   const saveTokenOTP = await UserModel.findOneAndUpdate(email, {tokenOTP: tokenOTP}, {insert:true})
+
+  //   await saveTokenOTP.save().then(()=>{
+  //     console.log('save opt successfully')
+  //   }).catch(err=>{
+  //     console.log('error save otp', err)
+  //   })
+
+  //   // send email to user 
+  //   const transporter = nodemailer.createTransport({
+  //     // config SMTP hoac su dung ben thu 3
+  //   })
+  //   // 
+  // }
 };
 
 module.exports = AuthController;

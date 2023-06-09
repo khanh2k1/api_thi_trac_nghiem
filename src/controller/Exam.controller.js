@@ -54,13 +54,15 @@ const ExamController = {
 
   // get exam by examId
   getExamByExamId : async(req, res) => {
-    const examId = req.body
+    const examId = req.params.examId
+    
     if(!examId) {
       return res.status(401).json({
         success:false,
         message:"invalid exam id"
       })
     }
+    
     const exam = await ExamModel.findOne({examId})
     if(!exam) {
       return res.status(404).json({

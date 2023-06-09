@@ -2,8 +2,13 @@ const UserModel = require('../model/User.model')
 const jwtVariable = require('../variables/jwt');
 const AuthUtils = require('../utils/Auth.utils');
 
+require('dotenv').config()
+
 const AuthMiddlewares = {
     isAuth : async (req, res, next) => {
+        
+        console.log(process.env.ACCESS_TOKEN_SECRET)
+        console.log(jwtVariable.accessTokenSecret)
 
         // Lấy access token từ header
         const accessTokenFromHeader = req.headers.x_authorization;
@@ -34,8 +39,8 @@ const AuthMiddlewares = {
     
         const user = await UserModel.findOne({username: verified.payload.username});
         
-        const { _id, firstname, lastname, image, email, username } = user
-        const newUser = { _id, firstname, lastname, image, email, username } 
+        const { _id, firstname, lastname, image, email, username, password } = user
+        const newUser = { _id, firstname, lastname, image, email, username, password } 
         req.user = newUser;
         
         return next();

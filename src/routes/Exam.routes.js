@@ -20,8 +20,8 @@ router.post(
 );
 
 // nhap examId de lay exam
-router.post('/:examId', ExamController.getExamByExamId)
-// get all exams
+router.get('/search-by-examId/:examId', AuthMiddlewares.isAuth, ExamController.getExamByExamId)
+// get all exams which isPublic: true
 router.get("/all", ExamController.getAll);
 // get exam
 router.get("/:_id", ObjectId, ExamController.get);

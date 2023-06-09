@@ -33,6 +33,11 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    // hashedOTP
+    opt: {
+      type:String,
+      required:false,
+    }
   },
   {
     timestamps: true,
