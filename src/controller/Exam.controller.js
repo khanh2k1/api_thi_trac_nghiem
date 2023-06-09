@@ -62,9 +62,16 @@ const ExamController = {
 
   // get a info exam
   getInfoExam: async(req, res) => {
-    const _id = await req.params._id;
+    const examId = await req.body.examId;
 
-    const exam = await ExamModel.findOne({ _id });
+    if(!examId) {
+      return res.status(400).json({
+        success: false,
+        message: "invalid examId",
+      });
+    }
+
+    const exam = await ExamModel.findOne({ examId });
 
     if (!exam) {
       return res.status(404).json({
@@ -74,13 +81,12 @@ const ExamController = {
     }
 
     const totalQuestions = exam.length
-    const {name, description, totalTime, examId } = exam
+    const {name, description, totalTime, _id} = exam
     const newExam = {_id, examId, name, description, totalTime, totalQuestions}
     res.json({
       success: true,
       message: newExam
     });
-
   },
 
   // get all exam which user created
