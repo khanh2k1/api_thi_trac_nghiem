@@ -169,7 +169,8 @@ const ExamController = {
       });
     }
   
-    const { name, isPublic, description, totalTime} = req.body;
+    const { name, isPublic, description, totalTime, questions, correctAnswers} = req.body;
+
     let image;
     if(!req.file) {
       image = imageBuffer
