@@ -164,8 +164,8 @@ const ExamController = {
     const { _id } = req.params;
     const exam = await ExamModel.findOne({ _id });
     console.log(req.body.questions)
-    exam['questions'] = req.body.questions
-    exam['correctAnswers'] = ExamUtils.parseStringToArray(req.body.correctAnswers)
+    exam['questions'] = ExamUtils.parseStringToArrayNumber(req.body.questions)
+    exam['correctAnswers'] = ExamUtils.parseStringToArrayNumber(req.body.correctAnswers)
     if (!exam) {
       return res.status(404).json({
         success: false,

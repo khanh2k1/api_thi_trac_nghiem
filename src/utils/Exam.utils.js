@@ -14,9 +14,13 @@ const ExamUtils = {
     return timestamp + result;
   },
 
-  parseStringToArray: (data) => {
+  parseStringToArrayNumber: (data) => {
     const objects = JSON.parse(data);
     return objects.map((item) => Number(item));
+  },
+  parseStringToArrayObject: (data) => {
+    const objects = JSON.parse(data);
+    return objects.map((item) => Object(item));
   },
 };
 
