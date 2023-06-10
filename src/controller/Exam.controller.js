@@ -18,8 +18,6 @@ const ExamController = {
             examId: item.examId,
             name: item.name,
             description: item.description,
-            totalQuestions: item.questions.length,
-            totalTime: item.totalTime,
             image: item.image,
           });
 
@@ -136,9 +134,12 @@ const ExamController = {
       });
     }
 
+    const {name, questions, correctAnswers, totalTime, description, isPublic } = exam;
+    const newExam = { _id, name, examId, questions, correctAnswers, totalTime, description, isPublic }
+
     res.json({
       success: true,
-      message: exam,
+      message: newExam,
     });
   },
 
