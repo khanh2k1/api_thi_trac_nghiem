@@ -3,7 +3,7 @@ const IsObjectId = require("../validators/ObjectId.validator");
 const ResultUtils = require("../utils/Result.utils");
 const UserModel = require('../model/User.model')
 const ResultController = {
-  
+
   getAll: async (req, res) => {
     try {
       const userId = req.user._id
@@ -58,9 +58,7 @@ const ResultController = {
   },
 
   create: async (req, res) => {
-    let result = await ResultModel(req.body);
 
-    console.log(result)
     // check user id
     const userId = req.user._id
     const user = await UserModel.findOne(userId)
@@ -71,6 +69,13 @@ const ResultController = {
         message: "invalid userId !",
       });
     }
+
+
+    let result = await ResultModel(req.body);
+    result['userId'] = userId
+    
+    console.log(result)
+    
 
     await result
       .save()
@@ -89,6 +94,13 @@ const ResultController = {
         });
       });
   },
+
+  delete: async (req, res) => {
+    const _id = req.params._id
+    
+    await ResultModel.findByIdAndDelete(_id).then()
+
+  }
 };
 
 module.exports = ResultController;
