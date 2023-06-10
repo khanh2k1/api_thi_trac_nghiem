@@ -19,4 +19,5 @@ router.post(
   ResultController.create
 );
 
+router.delete('/', AuthMiddlewares.isAuth, ObjectId, ResultController.delete)
 module.exports = router;
