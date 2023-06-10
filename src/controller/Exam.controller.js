@@ -54,7 +54,7 @@ const ExamController = {
     }
 
     const {name, examId, questions, correctAnswers, totalTime, description, isPublic } = exam;
-    const newExam = { _id, name, examId, questions, correctAnswers, totalTime, description, isPublic }
+    const newExam = { _id, name, examId, questions, correctAnswers, totalTime, description, isPublic, createdBy }
     res.json({
       success: true,
       message: newExam,
