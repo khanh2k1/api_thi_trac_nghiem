@@ -34,9 +34,6 @@ const ExamSchema = mongoose.Schema(
       default: false
     }
   },
-  {
-    timestamps: true,
-  }
 );
 
 // "Exam" will be save in mongoDB with name "Exam"

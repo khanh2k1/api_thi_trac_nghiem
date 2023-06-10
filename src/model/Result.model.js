@@ -19,9 +19,6 @@ const ResultSchema = mongoose.Schema(
       type: Number,
     },
   },
-  {
-    timestamps: true,
-  }
 );
 
 module.exports = mongoose.model("Result", ResultSchema);
