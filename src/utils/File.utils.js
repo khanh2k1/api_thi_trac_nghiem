@@ -6,7 +6,10 @@ const path = require("path");
 
 const FileUtils = {
   upload: multer({ storage: storage }),
-
+  // Mã hóa hình ảnh thành chuỗi base64
+  base64Image: (image) => {
+    Buffer.from(image).toString('base64')
+  }
 };
 
 

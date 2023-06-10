@@ -4,8 +4,8 @@ const jwtVariable = require("../variables/jwt");
 const UserModel = require("../model/User.model");
 const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
-const ImageUtils = require('../utils/ImageUtils')
-
+const ImageDefault = require('../variables/Image.variables')
+const FileUtils = require('../utils/File.utils')
 const AuthController = {
 
   register: async (req, res) => {
@@ -21,8 +21,11 @@ const AuthController = {
     }
 
     // image 
-    const imageBase64 = req.file || ImageUtils.avatar;
-    
+    const image = FileUtils.base64Image(req.file.buffer)
+
+    const imageBase64 = image || ImageDefault.avatar;
+
+    console.log("==>",typeof imageBase64)
     // hash password
     const hashedPassword = AuthUtils.hashToPassword(req.body.password);
 
@@ -34,8 +37,6 @@ const AuthController = {
       username: username,
       password: hashedPassword,
     });
-
-    console.log(newUser['image'])
 
     await newUser
       .save()

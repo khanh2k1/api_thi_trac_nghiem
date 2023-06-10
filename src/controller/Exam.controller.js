@@ -1,6 +1,6 @@
 const ExamModel = require("../model/Exam.model");
 const ExamUtils = require("../utils/Exam.utils");
-const imageBuffer = require("../utils/ImageUtils");
+const imageBuffer = require("../variables/Image.variables");
 const fs = require("fs");
 const ExamController = {
   // get all exam
