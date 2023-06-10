@@ -53,7 +53,7 @@ const ExamController = {
       });
     }
 
-    const {name, examId, questions, correctAnswers, totalTime, description, isPublic } = exam;
+    const {name, examId, questions, correctAnswers, totalTime, description, isPublic, createdBy } = exam;
     const newExam = { _id, name, examId, questions, correctAnswers, totalTime, description, isPublic, createdBy }
     res.json({
       success: true,
