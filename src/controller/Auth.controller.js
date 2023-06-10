@@ -33,7 +33,7 @@ const AuthController = {
     const hashedPassword = AuthUtils.hashToPassword(req.body.password);
 
     const newUser = new UserModel({
-      image: imageBase64,
+      image: image,
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.email,
