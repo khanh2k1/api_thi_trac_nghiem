@@ -1,8 +1,7 @@
 const joi = require('joi')
-const ImageSchema = require('./Image.schema')
 const UserSchema = {
     update: joi.object({
-        image: ImageSchema,
+        image: joi.string(),
         firstname: joi.string().required().min(2),
         lastname: joi.string().required().min(2),
     }),

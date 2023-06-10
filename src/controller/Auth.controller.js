@@ -23,7 +23,6 @@ const AuthController = {
     // image
     if (req.file) {
       image = FileUtils.base64Image(req.file.buffer);
-
     }
 
     image = ImageDefault.avatar;
