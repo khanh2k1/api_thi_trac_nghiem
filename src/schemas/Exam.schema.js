@@ -33,10 +33,12 @@ const ExamSchema = {
   }),
 
   update: joi.object({
-    name: joi.string().required().min(3),
+    name: joi.string().min(3),
     description: joi.string().optional(),
     isPublic: joi.boolean().default(false),
-    totalTime: joi.number().required(),
+    totalTime: joi.number(),
+    questions: joi.string(),
+    correctAnswers: joi.array().items(joi.number().required()),
   }),
 };
 

@@ -130,6 +130,7 @@ const ExamController = {
   create: async (req, res) => {
     
     let exam = await ExamModel(req.body);
+    
     if(!req.file) {
       
       exam['image'] = imageBuffer
@@ -162,6 +163,7 @@ const ExamController = {
   update: async (req, res) => {
     const { _id } = req.params;
     const exam = await ExamModel.findOne({ _id });
+    exam['questions'] = JSON.parse(req.body.questions)
     if (!exam) {
       return res.status(404).json({
         success: false,
@@ -169,11 +171,11 @@ const ExamController = {
       });
     }
   
-    const { name, isPublic, description, totalTime, questions, correctAnswers} = req.body;
+    const { name, isPublic, description, totalTime, questions, correctAnswers } = req.body;
 
     let image;
     if(!req.file) {
-      image = imageBuffer
+      image = imageBuffer 
     }else {
       image = req.file.buffer
     }
