@@ -11,8 +11,8 @@ const ExamController = {
 
         let exams = [];
         data.forEach((item) => {
-          // Convert the buffer to a base64 string
-        const base64StringImage = Buffer.from(item.image,).toString("base64");
+
+
           exams.push({
             _id: item._id,
             examId: item.examId,
@@ -20,10 +20,9 @@ const ExamController = {
             description: item.description,
             totalQuestions: item.questions.length,
             totalTime: item.totalTime,
-            image: base64StringImage
+            image: item.image,
           });
 
-          console.log(item.questions);
           console.log("=================================================");
         });
 
@@ -90,7 +89,7 @@ const ExamController = {
           description,
           totalTime,
           totalQuestions,
-          image:base64StringImage,
+          image: base64StringImage,
         };
         res.json({
           success: true,
@@ -149,9 +148,10 @@ const ExamController = {
     if (!req.file) {
       exam["image"] = imageBuffer;
     } else {
-      exam["image"] = req.file.buffer;
+      exam["image"] = req.file
     }
 
+    // Xử lý hình ảnh theo nhu cầu của bạn
     exam["createdBy"] = req.user._id;
     exam["examId"] = ExamUtils.generateId();
 
