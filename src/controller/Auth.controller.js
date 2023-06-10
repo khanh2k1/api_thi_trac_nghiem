@@ -25,7 +25,7 @@ const AuthController = {
       image = FileUtils.base64Image(req.file.buffer);
     }
 
-    image = ImageDefault.avatar;
+    else image = ImageDefault.avatar;
 
     console.log("==>", typeof imageBase64);
     // hash password
