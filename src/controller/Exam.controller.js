@@ -162,20 +162,26 @@ const ExamController = {
   // update infor of exam
   update: async (req, res) => {
     const { _id } = req.params;
+
     const exam = await ExamModel.findOne({ _id });
-    console.log(req.body.questions)
-    exam['questions'] = ExamUtils.parseStringToArrayObject(req.body.questions)
-    exam['correctAnswers'] = ExamUtils.parseStringToArrayNumber(req.body.correctAnswers)
+
     if (!exam) {
       return res.status(404).json({
         success: false,
         message: "not found",
       });
     }
+
+    
+    console.log(req.body.questions)
+    exam['questions'] = ExamUtils.parseStringToArrayObject(req.body.questions)
+    exam['correctAnswers'] = ExamUtils.parseStringToArrayNumber(req.body.correctAnswers)
+   
   
     const { name, isPublic, description, totalTime, questions, correctAnswers } = req.body;
 
     let image;
+    
     if(!req.file) {
       image = imageBuffer 
     }else {

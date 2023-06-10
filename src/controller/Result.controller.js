@@ -1,7 +1,7 @@
 const ResultModel = require("../model/Result.model");
 const IsObjectId = require("../validators/ObjectId.validator");
 const ResultUtils = require("../utils/Result.utils");
-
+const UserModel = require('../model/User.model')
 const ResultController = {
   getAll: async (req, res) => {
     try {
@@ -39,14 +39,6 @@ const ResultController = {
   get: async (req, res) => {
     const _id = req.params._id;
 
-    // const result = await ResultModel.findById(_id)
-    // if(!result) {
-    //   return res.status(404).json({
-    //     success:false,
-    //     message: "result not found !"
-    //   })
-    // }
-
     await ResultModel.findById({ _id }, {})
       .then((data) => {
         console.log(`results get-all = ${data}`);
@@ -67,15 +59,18 @@ const ResultController = {
   create: async (req, res) => {
     let result = await ResultModel(req.body);
 
+    console.log(result)
     // check user id
-    const userId = req.body.userId;
-    if (userId != req.user._id) {
+    const userId = req.user._id
+    const user = await UserModel.findOne(userId)
+
+    if(!user) {
       return res.status(422).json({
         success: false,
-        message: "invalid user id !",
+        message: "invalid userId !",
       });
     }
-
+    
     await result
       .save()
       .then(() => {

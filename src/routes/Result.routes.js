@@ -14,7 +14,6 @@ router.get("/", AuthMiddlewares.isAuth, ResultController.getAll);
 
 router.post(
   "/",
-  FileUtils.upload.single('image'), 
   AuthMiddlewares.isAuth,
   requestValidator(ResultSchema.create, "body"),
   ResultController.create
