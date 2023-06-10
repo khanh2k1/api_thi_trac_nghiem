@@ -164,6 +164,7 @@ const ExamController = {
     const { _id } = req.params;
     const exam = await ExamModel.findOne({ _id });
     exam['questions'] = JSON.parse(req.body.questions)
+    exam['correctAnswers'] = JSON.parse(req.body.correctAnswers)
     if (!exam) {
       return res.status(404).json({
         success: false,

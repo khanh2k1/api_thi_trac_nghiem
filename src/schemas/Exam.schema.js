@@ -38,7 +38,7 @@ const ExamSchema = {
     isPublic: joi.boolean().default(false),
     totalTime: joi.number(),
     questions: joi.string(),
-    correctAnswers: joi.array().items(joi.number().required()),
+    correctAnswers: joi.string()
   }),
 };
 
