@@ -8,24 +8,25 @@ const nodemailer = require('nodemailer')
 const AuthController = {
 
   register: async (req, res) => {
+
     const username = await req.body.username.toLowerCase();
     const user = await UserModel.findOne({ username: username });
 
     if (user) {
-      return res.status(422).json({
+      return res.status(401).json({
         success: false,
-        message: "username is not allow",
+        message: "Unauthorized",
       });
     }
 
     // image 
-    const imageBuffer = req.file.buffer || ImageBuffer;
+    const imageBase64 = req.file || ImageBuffer;
     
     // hash password
     const hashedPassword = AuthUtils.hashToPassword(req.body.password);
 
     const newUser = new UserModel({
-      image: imageBuffer,
+      image: imageBase64,
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.email,
