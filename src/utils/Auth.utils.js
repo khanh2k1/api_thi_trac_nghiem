@@ -134,6 +134,7 @@ const AuthUtils = {
         
         const isMatch = bcrypt.compareSync(password, hashedPassword)
 
+        
         if(isMatch) return true 
 
         return false

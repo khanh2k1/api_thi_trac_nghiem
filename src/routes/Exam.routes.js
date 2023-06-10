@@ -46,6 +46,6 @@ router.patch(
   ExamController.updateQuestions
 );
 // delete exam
-router.delete("/", AuthMiddlewares.isAuth, ExamController.deleteExam);
+router.delete("/:_id", AuthMiddlewares.isAuth, ObjectId, ExamController.deleteExam);
 
 module.exports = router;

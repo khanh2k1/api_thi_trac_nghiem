@@ -53,7 +53,7 @@ const ExamController = {
         message: "not found",
       });
     }
-
+    
     res.json({
       success: true,
       message: exam,
@@ -130,6 +130,7 @@ const ExamController = {
     
     let exam = await ExamModel(req.body);
     if(!req.file) {
+      
       exam['image'] = imageBuffer
     }else {
       exam['image'] = req.file.buffer
@@ -173,6 +174,9 @@ const ExamController = {
       isPublic,
       description,
       totalTime,
+      questions,
+      correctAnswers, 
+      image
     })
       .then(() => {
         console.log("update information of exam successfully");
@@ -230,8 +234,8 @@ const ExamController = {
   // delete a exam
   deleteExam: async (req, res) => {
     const createdBy = req.user._id;
-
-    await ExamModel.findOnedAndDelete(createdBy)
+    const _id = req.params._id
+    await ExamModel.findOneAndDelete({createdBy, _id})
       .then(() => {
         res.json({
           success: true,

@@ -27,11 +27,14 @@ const UserController = {
     const user = await req.user;
     const old_password = await req.body.old_password;
     const new_password = await req.body.new_password
-    const isValid = AuthUtils.comparePassword(old_password, user.password)
 
+    
+    const isValid = bcrypt.compareSync(old_password, user.password)
+
+    console.log(isValid)
 
     if(!isValid) {
-      return res.status(401).json({
+      return res.status(401).json({ 
         success:false,
         message: "Unauthorized"
       })
