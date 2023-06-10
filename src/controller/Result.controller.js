@@ -15,8 +15,10 @@ const ResultController = {
         const { userAnswers, _id } = item;
         
 
-        const score = ResultUtils.calculateScore(correctAnswers, userAnswers);
-        const object = { score, examId, name, description, _id  };
+        const totalQuestions = item['exam']['questions'].length 
+        const score = ResultUtils.calculateScore(correctAnswers, userAnswers) ;
+        
+        const object = { score, examId, name, description, _id, totalQuestions };
         results_2.push(object);
       });
 
