@@ -14,10 +14,6 @@ const UserController = {
       
       let { _id, firstname, lastname, image, email, username } = await user;
 
-      const image1 = FileUtils.base64Image(image) || ImageDefault.avatar
-      console.log(typeof ImageDefault.avatar)
-
-      image = image1
 
       return res.json({
         success: true,
@@ -73,6 +69,7 @@ const UserController = {
     const user = await req.user
     const {image, firstname, lastname} = await req.body
     
+    image = FileUtils.base64Image(image)
 
     await UserModel.findOneAndUpdate(user._id, {image, firstname, lastname}).then(()=>{
       res.json({
