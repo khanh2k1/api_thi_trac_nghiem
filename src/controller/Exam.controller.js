@@ -163,6 +163,7 @@ const ExamController = {
   update: async (req, res) => {
     const { _id } = req.params;
     const exam = await ExamModel.findOne({ _id });
+    console.log(req.body.questions)
     exam['questions'] = JSON.parse(req.body.questions)
     exam['correctAnswers'] = ExamUtils.parseStringToArray(req.body.correctAnswers)
     if (!exam) {
