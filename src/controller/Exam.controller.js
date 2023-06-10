@@ -11,6 +11,8 @@ const ExamController = {
 
         let exams = [];
         data.forEach((item) => {
+          // Convert the buffer to a base64 string
+        const base64StringImage = Buffer.from(item.image,).toString("base64");
           exams.push({
             _id: item._id,
             examId: item.examId,
@@ -18,7 +20,7 @@ const ExamController = {
             description: item.description,
             totalQuestions: item.questions.length,
             totalTime: item.totalTime,
-            image: item.image,
+            image: base64StringImage
           });
 
           console.log(item.questions);
