@@ -73,7 +73,7 @@ const ResultController = {
 
     let result = await ResultModel(req.body);
     result['userId'] = userId
-    
+
     console.log(result)
     
 
@@ -98,7 +98,19 @@ const ResultController = {
   delete: async (req, res) => {
     const _id = req.params._id
     
-    await ResultModel.findByIdAndDelete(_id).then()
+    await ResultModel.findByIdAndDelete(_id).then((data)=>{
+      console.log('deleted result successfully ')
+      res.json({
+        success:true,
+        message:"deleted successfully"
+      })
+    }).catch(error=>{
+      console.log(error)
+      res.status(422).json({
+        success:false,
+        message:"error delete result"
+      })
+    })
 
   }
 };
