@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const UserSchema = new mongoose.Schema(
   {
     image : {
-      type: Buffer,
+      type: String,
     },
     firstname: {
       type: String,

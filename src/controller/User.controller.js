@@ -1,6 +1,8 @@
 const UserModel = require("../model/User.model");
 const AuthUtils = require('../utils/Auth.utils')
 const bcrypt = require('bcrypt')
+const ImageDefault = require('../variables/Image.variables')
+const FileUtils = require('../utils/File.utils')
 // profile
 // update profile
 // change password
@@ -10,12 +12,16 @@ const UserController = {
     try {
       const user = await req.user
       
-      const { _id, firstname, lastname, image, email, username } = await user;
-      const base64Image = Buffer.from(image).toString('base64');
-      console.log(username)
+      let { _id, firstname, lastname, image, email, username } = await user;
+
+      const image1 = FileUtils.base64Image(image) || ImageDefault.avatar
+      console.log(typeof ImageDefault.avatar)
+
+      image = image1
+
       return res.json({
         success: true,
-        user: { _id, firstname, lastname, email, username, base64Image }
+        user: { _id, firstname, lastname, email, username, image }
       });
     }catch (error) {
       console.log(`error get profile : ${error}`);

@@ -13,7 +13,7 @@ const ExamSchema = mongoose.Schema(
       type:Number,
     },
     image: {
-      type: Buffer,
+      type: String,
     },
     description: {
       type: String,
