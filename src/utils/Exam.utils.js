@@ -1,3 +1,5 @@
+const { error } = require("../schemas/Image.schema");
+
 const ExamUtils = {
   generateId: () => {
     let result = "";
@@ -15,12 +17,20 @@ const ExamUtils = {
   },
 
   parseStringToArrayNumber: (data) => {
-    const objects = JSON.parse(data);
-    return objects.map((item) => Number(item));
+    try {
+      const objects = JSON.parse(data);
+      return objects.map((item) => Number(item));
+    } catch (error) {
+      console.error(error);
+    }
   },
   parseStringToArrayObject: (data) => {
-    const objects = JSON.parse(data);
-    return objects.map((item) => Object(item));
+    try {
+      const objects = JSON.parse(data);
+      return objects.map((item) => Object(item));
+    } catch (error) {
+      console.error(error);
+    }
   },
 };
 
