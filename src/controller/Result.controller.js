@@ -3,6 +3,7 @@ const IsObjectId = require("../validators/ObjectId.validator");
 const ResultUtils = require("../utils/Result.utils");
 const UserModel = require('../model/User.model')
 const ResultController = {
+  
   getAll: async (req, res) => {
     try {
       const userId = req.user._id
@@ -70,7 +71,7 @@ const ResultController = {
         message: "invalid userId !",
       });
     }
-    
+
     await result
       .save()
       .then(() => {

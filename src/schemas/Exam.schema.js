@@ -18,7 +18,7 @@ const ExamSchema = {
       )
       .required(),
     correctAnswers: joi.array().items(joi.number().required()).required(),
-    createdBy: joi.string().hex().length(24).required(),
+    createdBy: joi.string().hex().length(24),
     isPublic: joi.boolean().default(false),
   }),
 
