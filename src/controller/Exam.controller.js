@@ -168,7 +168,16 @@ const ExamController = {
         message: "not found",
       });
     }
-    const { name, isPublic, description, totalTime } = req.body;
+  
+    const { name, isPublic, description, totalTime} = req.body;
+    let image;
+    if(!req.file) {
+      image = imageBuffer
+    }else {
+      image = req.file.buffer
+    }
+    
+    console.log(req.body.correctAnswers)
 
     await ExamModel.findByIdAndUpdate(_id, {
       name,

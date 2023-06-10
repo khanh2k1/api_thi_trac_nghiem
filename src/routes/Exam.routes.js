@@ -32,6 +32,7 @@ router.get("/", AuthMiddlewares.isAuth, ExamController.getCreatedBy)
 //update exam
 router.patch(
   "/:_id",
+  FileUtils.upload.single('image'),
   AuthMiddlewares.isAuth,
   ObjectId,
   requestValidator(ExamSchema.update, "body"),
