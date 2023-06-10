@@ -2,14 +2,13 @@ const randToken = require("rand-token");
 const AuthUtils = require("../utils/Auth.utils");
 const jwtVariable = require("../variables/jwt");
 const UserModel = require("../model/User.model");
-const jwt = require('jsonwebtoken')
-const nodemailer = require('nodemailer')
-const ImageDefault = require('../variables/Image.variables')
-const FileUtils = require('../utils/File.utils')
+const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+const ImageDefault = require("../variables/Image.variables");
+const FileUtils = require("../utils/File.utils");
 const AuthController = {
 
   register: async (req, res) => {
-
     const username = await req.body.username.toLowerCase();
     const user = await UserModel.findOne({ username: username });
 
@@ -20,12 +19,16 @@ const AuthController = {
       });
     }
 
-    // image 
-    const image = FileUtils.base64Image(req.file.buffer)
+    let image;
+    // image
+    if (req.file) {
+      image = FileUtils.base64Image(req.file.buffer);
 
-    const imageBase64 = image || ImageDefault.avatar;
+    }
 
-    console.log("==>",typeof imageBase64)
+    image = ImageDefault.avatar;
+
+    console.log("==>", typeof imageBase64);
     // hash password
     const hashedPassword = AuthUtils.hashToPassword(req.body.password);
 
@@ -43,7 +46,7 @@ const AuthController = {
       .then((data) => {
         console.log("register successfully !");
         const { password, image, ...result } = data["_doc"];
-        console.log(result)
+        console.log(result);
         return res.json({
           success: true,
           result,
@@ -62,9 +65,8 @@ const AuthController = {
     const username = req.body.username.toLowerCase();
     const password = req.body.password;
 
-    const user = await UserModel.findOne({username});
+    const user = await UserModel.findOne({ username });
 
-  
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -72,10 +74,10 @@ const AuthController = {
       });
     }
 
-    const isMatch = await AuthUtils.comparePassword(password, user.password)
-    console.log('isMatch=',isMatch)
+    const isMatch = await AuthUtils.comparePassword(password, user.password);
+    console.log("isMatch=", isMatch);
 
-    if(!isMatch) {
+    if (!isMatch) {
       return res.status(401).json({
         success: false,
         message: "Unauthorized",
@@ -196,12 +198,12 @@ const AuthController = {
 
   //   const accessTokenSecret =
   //   process.env.ACCESS_TOKEN_SECRET || jwtVariable.accessTokenSecret;
-  //   // create token 
+  //   // create token
   //   const tokenOTP = jwt.sign(otp, accessTokenSecret, {expiresIn: '5m'})
 
-  //   console.log(tokenOTP) 
+  //   console.log(tokenOTP)
 
-  //   // save into db 
+  //   // save into db
   //   const saveTokenOTP = await UserModel.findOneAndUpdate(email, {tokenOTP: tokenOTP}, {insert:true})
 
   //   await saveTokenOTP.save().then(()=>{
@@ -210,11 +212,11 @@ const AuthController = {
   //     console.log('error save otp', err)
   //   })
 
-  //   // send email to user 
+  //   // send email to user
   //   const transporter = nodemailer.createTransport({
   //     // config SMTP hoac su dung ben thu 3
   //   })
-  //   // 
+  //   //
   // }
 };
 
