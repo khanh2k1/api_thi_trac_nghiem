@@ -54,9 +54,10 @@ const ExamController = {
       });
     }
 
+    const {image, ...newExam} = exam
     res.json({
       success: true,
-      message: exam,
+      message: newExam,
     });
   },
 
@@ -75,7 +76,7 @@ const ExamController = {
       const totalQuestions = data.questions.length
       console.log(totalQuestions)
       const {name, description, totalTime, _id} = data
-      const newExam = {_id, examId, name, description, totalTime, totalQuestions}
+      const newExam = {_id, examId, name, description, totalTime, totalQuestions, image}
       res.json({
         success: true,
         message: newExam
