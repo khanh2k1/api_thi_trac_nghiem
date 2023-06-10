@@ -71,12 +71,13 @@ const UserController = {
     let image
     if(req.file) {
       image = FileUtils.base64Image(req.file.buffer)
+      console.log('==>> ', image)
     }else image = ImageDefault.avatar
     
 
     const {firstname, lastname } = await req.body
-    console.log(image, firstname, lastname)
-    image = FileUtils.base64Image(image)
+    console.log('=>>>',image, firstname, lastname)
+
     const _id = user._id
     const isExistedUser = await UserModel.findById(_id)
     if(!isExistedUser) {
@@ -86,10 +87,17 @@ const UserController = {
         message:"Unauthorized"
       })
     }
-    await UserModel.findOneAndUpdate(user._id, {image, firstname, lastname}).then(()=>{
+    console.log('==>',image)
+    await UserModel.findByIdAndUpdate(user._id, {image, firstname, lastname}).then(()=>{
       res.json({
         success:true,
         message:{image, firstname, lastname} 
+      })
+    }).catch(err=>{
+      console.log(err)
+      res.status(422).json({
+        success:false,
+        message:err
       })
     })
 
