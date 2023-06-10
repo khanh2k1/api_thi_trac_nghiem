@@ -55,7 +55,8 @@ const ExamController = {
       });
     }
 
-    const { image, ...newExam } = exam;
+    const {name, examId, questions, correctAnswers, totalTime, description, isPublic } = exam;
+    const newExam = { _id, name, examId, questions, correctAnswers, totalTime, description, isPublic }
     res.json({
       success: true,
       message: newExam,
