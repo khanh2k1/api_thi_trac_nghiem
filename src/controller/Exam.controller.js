@@ -1,34 +1,34 @@
 const ExamModel = require("../model/Exam.model");
 const ExamUtils = require("../utils/Exam.utils");
-const imageBuffer = require('../variables/imageBuffer')
+const imageBuffer = require("../variables/imageBuffer");
+const fs = require("fs");
 const ExamController = {
   // get all exam
   getAll: async (req, res) => {
-    await ExamModel.find({isPublic: true})
+    await ExamModel.find({ isPublic: true })
       .then((data) => {
         console.log("get exams successfully");
-        
-        let exams = []
-        data.forEach((item)=>{
-          exams.push({ 
+
+        let exams = [];
+        data.forEach((item) => {
+          exams.push({
             _id: item._id,
-            examId: item.examId, 
-            name: item.name, 
-            description: item.description, 
-            totalQuestions: item.questions.length, 
-            totalTime: item.totalTime, 
-            image: item.image })
+            examId: item.examId,
+            name: item.name,
+            description: item.description,
+            totalQuestions: item.questions.length,
+            totalTime: item.totalTime,
+            image: item.image,
+          });
 
-            console.log(item.questions)
-            console.log("=================================================")
-        })
-
-       
+          console.log(item.questions);
+          console.log("=================================================");
+        });
 
         res.json({
           success: true,
           message: "get exams successfully",
-          exams
+          exams,
         });
       })
       .catch((error) => {
@@ -54,7 +54,7 @@ const ExamController = {
       });
     }
 
-    const {image, ...newExam} = exam
+    const { image, ...newExam } = exam;
     res.json({
       success: true,
       message: newExam,
@@ -62,39 +62,53 @@ const ExamController = {
   },
 
   // get a info exam
-  getInfoExam: async(req, res) => {
+  getInfoExam: async (req, res) => {
     const examId = await req.body.examId;
 
-    if(!examId) {
+    if (!examId) {
       return res.status(400).json({
         success: false,
         message: "invalid examId",
       });
     }
 
-    await ExamModel.findOne({ examId }).then((data)=>{
-      const totalQuestions = data.questions.length
-      console.log(totalQuestions)
-      const {name, description, totalTime, _id} = data
-      const newExam = {_id, examId, name, description, totalTime, totalQuestions, image}
-      res.json({
-        success: true,
-        message: newExam
+    await ExamModel.findOne({ examId })
+      .then((data) => {
+        const totalQuestions = data.questions.length;
+        console.log(totalQuestions);
+        const { name, description, totalTime, _id, image } = data;
+
+        // Convert the buffer to a base64 string
+        const base64StringImage = Buffer.from(image).toString("base64");
+
+        const newExam = {
+          _id,
+          examId,
+          name,
+          description,
+          totalTime,
+          totalQuestions,
+          image:base64StringImage,
+        };
+        res.json({
+          success: true,
+          message: newExam,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(422).json({
+          success: false,
+          message: err,
+        });
       });
-    }).catch(err=>{
-      console.log(err)
-      res.status(422).json({
-        success: false,
-        message: err,
-      });
-    })
   },
 
   // get all exam which user created
   getCreatedBy: async (req, res) => {
     const createdBy = await req.user._id;
-    console.log(createdBy)
-    const exams = await ExamModel.find({createdBy});
+    console.log(createdBy);
+    const exams = await ExamModel.find({ createdBy });
     res.json({
       success: true,
       exams,
@@ -102,61 +116,63 @@ const ExamController = {
   },
 
   // get exam by examId
-  getExamByExamId : async(req, res) => {
-    const examId = req.params.examId
-    
-    if(!examId) {
+  getExamByExamId: async (req, res) => {
+    const examId = req.params.examId;
+
+    if (!examId) {
       return res.status(401).json({
-        success:false,
-        message:"invalid exam id"
-      })
+        success: false,
+        message: "invalid exam id",
+      });
     }
-    
-    const exam = await ExamModel.findOne({examId})
-    if(!exam) {
+
+    const exam = await ExamModel.findOne({ examId });
+    if (!exam) {
       return res.status(404).json({
-        success:falses,
-        message: "not found exam"
-      })
+        success: falses,
+        message: "not found exam",
+      });
     }
 
     res.json({
-      success:true,
-      message: exam
-    })
+      success: true,
+      message: exam,
+    });
   },
 
   // create a exam
   create: async (req, res) => {
-    
     let exam = await ExamModel(req.body);
-    
-    if(!req.file) {
-      
-      exam['image'] = imageBuffer
-    }else {
-      exam['image'] = req.file.buffer
+
+    if (!req.file) {
+      exam["image"] = imageBuffer;
+    } else {
+      exam["image"] = req.file.buffer;
     }
-    
+
     exam["createdBy"] = req.user._id;
     exam["examId"] = ExamUtils.generateId();
 
-    console.log(req.body.correctAnswers)
+    console.log(req.body.correctAnswers);
 
-    await exam.save().then((data) => {
-      console.log("create exam successfully");
-      
-      res.json({
-        success: true,
-        message: "create a new exam successfully", data
-      });
-    }).catch(err=>{
-      console.log('error create exam', err)
-      res.status(422).json({
-        success:false,
-        message: err
+    await exam
+      .save()
+      .then((data) => {
+        console.log("create exam successfully");
+
+        res.json({
+          success: true,
+          message: "create a new exam successfully",
+          data,
+        });
       })
-    })
+      .catch((err) => {
+        console.log("error create exam", err);
+        res.status(422).json({
+          success: false,
+          message: err,
+        });
+      });
   },
 
   // update infor of exam
@@ -172,23 +188,30 @@ const ExamController = {
       });
     }
 
-    
-    console.log(req.body.questions)
-    exam['questions'] = ExamUtils.parseStringToArrayObject(req.body.questions)
-    exam['correctAnswers'] = ExamUtils.parseStringToArrayNumber(req.body.correctAnswers)
-   
-  
-    const { name, isPublic, description, totalTime, questions, correctAnswers } = req.body;
+    console.log(req.body.questions);
+    exam["questions"] = ExamUtils.parseStringToArrayObject(req.body.questions);
+    exam["correctAnswers"] = ExamUtils.parseStringToArrayNumber(
+      req.body.correctAnswers
+    );
+
+    const {
+      name,
+      isPublic,
+      description,
+      totalTime,
+      questions,
+      correctAnswers,
+    } = req.body;
 
     let image;
-    
-    if(!req.file) {
-      image = imageBuffer 
-    }else {
-      image = req.file.buffer
+
+    if (!req.file) {
+      image = imageBuffer;
+    } else {
+      image = req.file.buffer;
     }
-    
-    console.log(req.body.correctAnswers)
+
+    console.log(req.body.correctAnswers);
 
     await ExamModel.findByIdAndUpdate(_id, {
       name,
@@ -196,8 +219,8 @@ const ExamController = {
       description,
       totalTime,
       questions,
-      correctAnswers, 
-      image
+      correctAnswers,
+      image,
     })
       .then(() => {
         console.log("update information of exam successfully");
@@ -219,7 +242,7 @@ const ExamController = {
   // update question of exam
   updateQuestions: async (req, res) => {
     const { questions, correctAnswers } = req.body;
-    console.log(correctAnswers)
+    console.log(correctAnswers);
     const _id = req.params._id;
     const exam = await ExamModel.findById({ _id });
     if (!exam) {
@@ -230,11 +253,9 @@ const ExamController = {
       });
     }
 
-    await ExamModel.findByIdAndUpdate
-    (
-      _id, 
-      { $set: { questions, correctAnswers } }
-    )
+    await ExamModel.findByIdAndUpdate(_id, {
+      $set: { questions, correctAnswers },
+    })
       .then(() => {
         console.log("update questions successfully");
         res.json({
@@ -255,8 +276,8 @@ const ExamController = {
   // delete a exam
   deleteExam: async (req, res) => {
     const createdBy = req.user._id;
-    const _id = req.params._id
-    await ExamModel.findOneAndDelete({createdBy, _id})
+    const _id = req.params._id;
+    await ExamModel.findOneAndDelete({ createdBy, _id })
       .then(() => {
         res.json({
           success: true,
