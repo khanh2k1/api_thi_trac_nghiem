@@ -28,7 +28,7 @@ router.get("/:_id", ObjectId, ExamController.get);
 // get info exam
 router.post("/info-exam/", ExamController.getInfoExam)
 // get all exams which user created
-router.get("/", AuthMiddlewares.isAuth, ExamController.getByCreated)
+router.get("/", AuthMiddlewares.isAuth, ExamController.getCreatedBy)
 //update exam
 router.patch(
   "/:_id",

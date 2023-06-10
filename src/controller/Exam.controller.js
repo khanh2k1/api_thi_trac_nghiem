@@ -53,7 +53,7 @@ const ExamController = {
         message: "not found",
       });
     }
-    
+
     res.json({
       success: true,
       message: exam,
@@ -90,7 +90,7 @@ const ExamController = {
   },
 
   // get all exam which user created
-  getByCreated: async (req, res) => {
+  getCreatedBy: async (req, res) => {
     const createdBy = await req.user._id;
     console.log(createdBy)
     const exams = await ExamModel.find({createdBy});
