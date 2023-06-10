@@ -2,9 +2,10 @@ const randToken = require("rand-token");
 const AuthUtils = require("../utils/Auth.utils");
 const jwtVariable = require("../variables/jwt");
 const UserModel = require("../model/User.model");
-const ImageBuffer = require('../variables/imageBuffer')
 const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
+const ImageUtils = require('../utils/ImageUtils')
+
 const AuthController = {
 
   register: async (req, res) => {
@@ -20,7 +21,7 @@ const AuthController = {
     }
 
     // image 
-    const imageBase64 = req.file || ImageBuffer;
+    const imageBase64 = req.file || ImageUtils.avatar;
     
     // hash password
     const hashedPassword = AuthUtils.hashToPassword(req.body.password);

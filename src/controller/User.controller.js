@@ -5,14 +5,17 @@ const bcrypt = require('bcrypt')
 // update profile
 // change password
 const UserController = {
+
   getProfile: async (req, res) => {
     try {
       const user = await req.user
+      
       const { _id, firstname, lastname, image, email, username } = await user;
+      const base64Image = Buffer.from(image).toString('base64');
       console.log(username)
       return res.json({
         success: true,
-        user: { _id, firstname, lastname, email, username, image }
+        user: { _id, firstname, lastname, email, username, base64Image }
       });
     }catch (error) {
       console.log(`error get profile : ${error}`);

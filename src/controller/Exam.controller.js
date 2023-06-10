@@ -1,6 +1,6 @@
 const ExamModel = require("../model/Exam.model");
 const ExamUtils = require("../utils/Exam.utils");
-const imageBuffer = require("../variables/imageBuffer");
+const imageBuffer = require("../utils/ImageUtils");
 const fs = require("fs");
 const ExamController = {
   // get all exam
@@ -189,12 +189,12 @@ const ExamController = {
         message: "not found",
       });
     }
-
-    console.log(req.body.questions);
-    exam["questions"] = ExamUtils.parseStringToArrayObject(req.body.questions);
-    exam["correctAnswers"] = ExamUtils.parseStringToArrayNumber(
-      req.body.correctAnswers
-    );
+    
+    if(!req.file) {
+      
+    }
+    
+    
 
     const {
       name,
