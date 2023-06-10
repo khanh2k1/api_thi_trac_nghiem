@@ -71,8 +71,8 @@ const UserController = {
     let image
     if(req.file) {
       image = FileUtils.base64Image(req.file.buffer)
-    }
-    image = ImageDefault.avatar
+    }else image = ImageDefault.avatar
+    
 
     const {firstname, lastname } = await req.body
     console.log(image, firstname, lastname)
