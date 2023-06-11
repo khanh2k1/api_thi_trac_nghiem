@@ -178,6 +178,8 @@ const ExamController = {
 
   // create a exam
   create: async (req, res) => {
+
+    console.log('req.body==> ',req.body )
     let exam = await ExamModel(req.body);
 
     if (!req.file) {
@@ -206,9 +208,10 @@ const ExamController = {
       typeof exam['questions'],
       typeof exam['correctAnswers']
     );
+    console.log('===>>>', exam)
     console.log("=============================================================")
     console.log('exams typeof =>>>: ', exam['questions'])
-    console.log('exams =>>>: ', JSON.parse(exam['questions']))
+    console.log('exams[question] =>>>: ', JSON.parse(exam['questions']))
     console.log('correctAnswers typeof =>>>: ', exam['correctAnswers'])
     console.log('correctAnswers =>>>: ', JSON.parse(exam['correctAnswers']))
     console.log("=============================================================")
