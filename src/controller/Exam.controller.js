@@ -179,9 +179,9 @@ const ExamController = {
   // create a exam
   create: async (req, res) => {
 
-    console.log('req.body==> ',req.body.exam )
+    console.log('req.body==> ',req.body)
     
-    const exam = await req.body.exam
+    const exam = await req.body
 
     if (!req.file) {
       exam["image"] = ImageDefault;
@@ -209,6 +209,7 @@ const ExamController = {
       typeof exam['questions'],
       typeof exam['correctAnswers']
     );
+
     console.log('===>>>', exam)
     console.log("=============================================================")
     console.log('exams typeof =>>>: ', exam['questions'])
@@ -222,12 +223,22 @@ const ExamController = {
     exam['questions'] = JSON.parse(exam['questions'])
     exam['correctAnswers'] = JSON.parse(exam['correctAnswers'])
 
-   
-    
     const savedExam = await new ExamModel(exam)
 
     const isSaved = await savedExam.save()
     console.log("is saved : ", isSaved)
+
+    if(!isSaved) {
+      return res.status(422).json({
+        success:false,
+        message:"saved failure", err
+      })
+    }else {
+      res.json({
+        success:true,
+        message:"saved successfully"
+      })
+    }
 
     
       
