@@ -10,12 +10,21 @@ const AuthController = {
 
   register: async (req, res) => {
     const username = await req.body.username.toLowerCase();
-    const user = await UserModel.findOne({ username: username });
+    const isExistedUsername = await UserModel.findOne(username);
 
-    if (user) {
+    if (isExistedUsername) {
       return res.status(401).json({
         success: false,
-        message: "Unauthorized",
+        message: "Username has existed"
+      });
+    }
+
+    const isExistedEmail = await UserModel.findOne(email);
+
+    if (isExistedEmail) {
+      return res.status(401).json({
+        success: false,
+        message: "Email has existed"
       });
     }
 
