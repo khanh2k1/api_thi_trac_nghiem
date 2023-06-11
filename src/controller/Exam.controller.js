@@ -206,10 +206,14 @@ const ExamController = {
       typeof exam['questions'],
       typeof exam['correctAnswers']
     );
+    console.log("=============================================================")
+    console.log(exam['questions'])
+    console.log(JSON.parse(exam['questions']))
+    console.log("=============================================================")
     exam['questions'] = JSON.parse(exam['questions'])
     exam['correctAnswers'] = JSON.parse(exam['correctAnswers'])
     await exam
-      .save()
+      .save()   
       .then((data) => {
         console.log("create exam successfully");s
 
