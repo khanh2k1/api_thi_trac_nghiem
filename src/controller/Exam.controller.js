@@ -187,6 +187,14 @@ const ExamController = {
       exam["image"] = FileUtils.base64Image(req.file.buffer);
     }
 
+    if(!exam) {
+      console.error('new exam is invalid')
+      return res.staus(422).json({
+        success:false,
+        message:'Invalid exam'
+      })
+    }
+
     // Xử lý hình ảnh theo nhu cầu của bạn
     exam["createdBy"] = req.user._id;
     exam["examId"] = ExamUtils.generateId();
@@ -198,11 +206,12 @@ const ExamController = {
       typeof exam['questions'],
       typeof exam['correctAnswers']
     );
-
+    exam['questions'] = await JSON.parse(exam['questions'])
+    exam['questions'] = await JSON.parse(exam['correctAnswers'])
     await exam
       .save()
       .then((data) => {
-        console.log("create exam successfully");
+        console.log("create exam successfully");s
 
         res.json({
           success: true,
@@ -211,7 +220,7 @@ const ExamController = {
         });
       })
       .catch((err) => {
-        console.error("error create exam");
+        console.error("error create exam", err);
         res.status(422).json({
           success: false,
           message: err,
