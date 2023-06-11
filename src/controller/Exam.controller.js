@@ -273,7 +273,7 @@ const ExamController = {
     if (!req.file) {
       image = imageBuffer;
     } else {
-      image = req.file.buffer;
+      image = FileUtils.base64Image(req.file.buffer);
     }
 
     console.log(req.body.correctAnswers);
