@@ -63,6 +63,8 @@ const ResultController = {
     const userId = req.user._id
     const user = await UserModel.findOne(userId)
 
+
+    
     if(!user) {
       return res.status(422).json({
         success: false,
