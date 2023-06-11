@@ -207,8 +207,12 @@ const ExamController = {
       typeof exam['correctAnswers']
     );
     console.log("=============================================================")
-    console.log(exam['questions'])
-    console.log(JSON.parse(exam['questions']))
+    console.log('exams typeof =>>>: ', exam['questions'])
+    console.log('exams =>>>: ', JSON.parse(exam['questions']))
+    console.log('correctAnswers typeof =>>>: ', exam['correctAnswers'])
+    console.log('correctAnswers =>>>: ', JSON.parse(exam['correctAnswers']))
+    console.log("=============================================================")
+    console.log("=============================================================")
     console.log("=============================================================")
     exam['questions'] = JSON.parse(exam['questions'])
     exam['correctAnswers'] = JSON.parse(exam['correctAnswers'])
