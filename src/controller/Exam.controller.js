@@ -179,8 +179,9 @@ const ExamController = {
   // create a exam
   create: async (req, res) => {
 
-    console.log('req.body==> ',req.body )
-    let exam = await ExamModel(req.body);
+    console.log('req.body==> ',req.body.exam )
+    
+    const exam = await req.body.exam
 
     if (!req.file) {
       exam["image"] = ImageDefault;
@@ -217,26 +218,19 @@ const ExamController = {
     console.log("=============================================================")
     console.log("=============================================================")
     console.log("=============================================================")
+
     exam['questions'] = JSON.parse(exam['questions'])
     exam['correctAnswers'] = JSON.parse(exam['correctAnswers'])
-    await exam
-      .save()   
-      .then((data) => {
-        console.log("create exam successfully");s
 
-        res.json({
-          success: true,
-          message: "create a new exam successfully",
-          data,
-        });
-      })
-      .catch((err) => {
-        console.error("error create exam", err);
-        res.status(422).json({
-          success: false,
-          message: err,
-        });
-      });
+   
+    
+    const savedExam = await new ExamModel(exam)
+
+    const isSaved = await savedExam.save()
+    console.log("is saved : ", isSaved)
+
+    
+      
   },
 
   // update infor of exam

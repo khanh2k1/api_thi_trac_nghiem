@@ -10,7 +10,8 @@ const QuestionSchema = mongoose.Schema(
       required: true,
       
     },
-    answers: [
+    answers: 
+    [
       {
         type: String,
         required: true,
