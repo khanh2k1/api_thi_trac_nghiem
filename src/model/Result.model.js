@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const ExamModel = require("../model/Exam.model");
+const QuestionModel = require("../model/Question.model");
 // Tạo schema kết quả thi
 const ResultSchema = mongoose.Schema(
   {
