@@ -207,7 +207,7 @@ const ExamController = {
       typeof exam['correctAnswers']
     );
     exam['questions'] = await JSON.parse(exam['questions'])
-    exam['questions'] = await JSON.parse(exam['correctAnswers'])
+    exam['correctAnswers'] = await JSON.parse(exam['correctAnswers'])
     await exam
       .save()
       .then((data) => {
