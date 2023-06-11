@@ -8,7 +8,35 @@ const ResultSchema = mongoose.Schema(
       ref: "User",
     },
     exam: {
-      type: ExamModel.schema,
+      type: {
+        name: {
+          type: String,
+        },
+        examId: {
+          type:String,
+        },
+        totalTime: {
+          type:Number,
+        },
+        description: {
+          type: String,
+        },
+        questions: {
+          type: [QuestionModel.schema],
+        },
+        correctAnswers: [{
+          type:Number,
+        }],
+        createdBy: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: "User"
+        },
+        isPublic: {
+          type: Boolean,
+          default: false
+        }
+      },
     },
     userAnswers: [
       {

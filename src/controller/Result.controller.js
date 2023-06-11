@@ -62,9 +62,9 @@ const ResultController = {
     // check user id
     const userId = req.user._id
     const user = await UserModel.findOne(userId)
+    let result = await req.body
 
 
-    
     if(!user) {
       return res.status(422).json({
         success: false,
@@ -72,14 +72,22 @@ const ResultController = {
       });
     }
 
+    if(!result) {
+      return res.status(422).json({
+        success: false,
+        message: "invalid result !",
+      });
+    }
 
-    let result = await ResultModel(req.body);
+    console.log("===> result=", result)
+
+    
     result['userId'] = userId
 
-    console.log(result)
+    const isSavedResult = await new ResultModel(result)
     
 
-    await result
+    await isSavedResult
       .save()
       .then(() => {
         console.log("create a result successfully");
