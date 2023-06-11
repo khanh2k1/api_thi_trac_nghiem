@@ -239,28 +239,27 @@ const ExamController = {
         message:"saved successfully"
       })
     }
-
-    
-      
   },
 
   // update infor of exam
   update: async (req, res) => {
     const { _id } = req.params;
+   
+    
 
-    const exam = await ExamModel.findOne({ _id });
+    const isExistedExam = await ExamModel.findOne({ _id });
 
-    if (!exam) {
+    if (!isExistedExam) {
       return res.status(404).json({
         success: false,
         message: "not found",
       });
     }
 
-    if (!req.file) {
-    }
+    // convert string to json
+    
 
-    const {
+    let {
       name,
       isPublic,
       description,
@@ -278,6 +277,8 @@ const ExamController = {
     }
 
     console.log(req.body.correctAnswers);
+    questions = await JSON.parse(questions)
+    correctAnswers = await JSON.parse(correctAnswers)
 
     await ExamModel.findByIdAndUpdate(_id, {
       name,
