@@ -1,7 +1,7 @@
 const ExamModel = require("../model/Exam.model");
 const ExamUtils = require("../utils/Exam.utils");
-const imageBuffer = require("../variables/Image.variables");
-const fs = require("fs");
+const ImageDefault = require("../variables/Image.variables");
+const FileUtils = require("../utils/File.utils");
 const ExamController = {
   // get all exam
   getAll: async (req, res) => {
@@ -11,8 +11,6 @@ const ExamController = {
 
         let exams = [];
         data.forEach((item) => {
-
-
           exams.push({
             _id: item._id,
             examId: item.examId,
@@ -53,8 +51,27 @@ const ExamController = {
       });
     }
 
-    const {name, examId, questions, correctAnswers, totalTime, description, isPublic, createdBy } = exam;
-    const newExam = { _id, name, examId, questions, correctAnswers, totalTime, description, isPublic, createdBy }
+    const {
+      name,
+      examId,
+      questions,
+      correctAnswers,
+      totalTime,
+      description,
+      isPublic,
+      createdBy,
+    } = exam;
+    const newExam = {
+      _id,
+      name,
+      examId,
+      questions,
+      correctAnswers,
+      totalTime,
+      description,
+      isPublic,
+      createdBy,
+    };
     res.json({
       success: true,
       message: newExam,
@@ -134,8 +151,24 @@ const ExamController = {
       });
     }
 
-    const {name, questions, correctAnswers, totalTime, description, isPublic } = exam;
-    const newExam = { _id, name, examId, questions, correctAnswers, totalTime, description, isPublic }
+    const {
+      name,
+      questions,
+      correctAnswers,
+      totalTime,
+      description,
+      isPublic,
+    } = exam;
+    const newExam = {
+      _id,
+      name,
+      examId,
+      questions,
+      correctAnswers,
+      totalTime,
+      description,
+      isPublic,
+    };
 
     res.json({
       success: true,
@@ -148,16 +181,23 @@ const ExamController = {
     let exam = await ExamModel(req.body);
 
     if (!req.file) {
-      exam["image"] = imageBuffer;
+      exam["image"] = ImageDefault;
+      console.log("req.file not found");
     } else {
-      exam["image"] = req.file
+      exam["image"] = FileUtils.base64Image(req.file.buffer);
     }
 
     // Xử lý hình ảnh theo nhu cầu của bạn
     exam["createdBy"] = req.user._id;
     exam["examId"] = ExamUtils.generateId();
 
-    console.log(req.body.correctAnswers);
+    console.log(
+      typeof exam["image"],
+      typeof exam["totalTime"],
+      typeof exam["name"],
+      typeof exam['questions'],
+      typeof exam['correctAnswers']
+    );
 
     await exam
       .save()
@@ -171,7 +211,7 @@ const ExamController = {
         });
       })
       .catch((err) => {
-        console.log("error create exam", err);
+        console.error("error create exam");
         res.status(422).json({
           success: false,
           message: err,
@@ -191,12 +231,9 @@ const ExamController = {
         message: "not found",
       });
     }
-    
-    if(!req.file) {
-      
+
+    if (!req.file) {
     }
-    
-    
 
     const {
       name,

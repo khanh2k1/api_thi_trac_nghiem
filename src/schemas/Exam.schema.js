@@ -15,21 +15,16 @@ const ExamSchema = {
           questionText: joi.string().required(),
           answers: joi.array().items(joi.string().required()).required(),
         })
-      )
-      .required(),
+      ),
+     
     correctAnswers: joi.array().items(joi.number().required()).required(),
     createdBy: joi.string().hex().length(24),
     isPublic: joi.boolean().default(false),
   }),
 
   updateQuestions: joi.object({
-    questions: joi.array().items(
-      joi.object({
-        questionText: joi.string().required(),
-        answers: joi.array().items(joi.string().required()).required(),
-      })
-    ),
-    correctAnswers: joi.array().items(joi.number().required()),
+    questions: joi.string(),
+    correctAnswers: joi.string()
   }),
 
   update: joi.object({

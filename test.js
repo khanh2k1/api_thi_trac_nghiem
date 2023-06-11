@@ -1,17 +1,47 @@
-const fs = require('fs');
-const path = require('path')
-function imageToBase64(imagePath) {
-  // Đọc hình ảnh từ file
-  const image = fs.readFileSync(imagePath);
+const questions = {
+  question1: {
+    questionText: "Hom nay la thu may ?",
+    answers: {
+      0: "thu 2",
+      1: "thu 3",
+      2: "thu 4",
+      3: "thu 5",
+    },
+  },
 
-  // Mã hóa hình ảnh thành chuỗi base64
-  const base64Image = Buffer.from(image).toString('base64');
+  question2: {
+    questionText: "Hom nay la thu may 2 ?",
+    answers: {
+      0: "thu 2",
+      1: "thu 3",
+      2: "thu 4",
+      3: "thu 5",
+    },
+  },
 
-  return base64Image;
-}
+  question3: {
+    questionText: "Hom nay la thu may 3?",
+    answers: {
+      0: "thu 2",
+      1: "thu 3",
+      2: "thu 4",
+      3: "thu 5",
+    },
+  },
 
-// Sử dụng hàm imageToBase64
-const filePath = path.join('src','images','linh.jpg')
+  question4: {
+    questionText: "Hom nay la thu may 4?",
+    answers: {
+      0: "thu 2",
+      1: "thu 3",
+      2: "thu 4",
+      3: "thu 5",
+    },
+  },
+};
 
-const base64String = imageToBase64(filePath);
-console.log(base64String);
+// convert object to array
+console.log(questions)
+
+const results = Object.values(questions)
+console.log(results)
