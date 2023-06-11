@@ -9,15 +9,6 @@ const ResultSchema = {
     userAnswers: joi.array().items(
       joi.number().required()
     ).required(),
-    exam: joi.object({
-      examId: joi.string(),
-      name: joi.string().required().min(3),
-      totalTime: joi.number().required(),
-      description: joi.string().optional(),
-      image: joi.string(),
-      createdBy: joi.string().hex().length(24),
-      isPublic: joi.boolean().default(false),
-    }),
   }),
 };
 
