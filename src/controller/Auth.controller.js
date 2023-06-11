@@ -10,7 +10,7 @@ const AuthController = {
 
   register: async (req, res) => {
     const username = await req.body.username.toLowerCase();
-    const isExistedUsername = await UserModel.findOne(username);
+    const isExistedUsername = await UserModel.findOne({username});
 
     if (isExistedUsername) {
       return res.status(401).json({
@@ -19,7 +19,7 @@ const AuthController = {
       });
     }
 
-    const isExistedEmail = await UserModel.findOne(email);
+    const isExistedEmail = await UserModel.findOne({email});
 
     if (isExistedEmail) {
       return res.status(401).json({
