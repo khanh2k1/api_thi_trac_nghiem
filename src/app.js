@@ -22,8 +22,8 @@ app.use(helmet());
 app.use(compression());
 
 // middleware swagger
-app.use('/api-docs', swaggerUiExpress.serve)
-app.use('/api-docs', swaggerUiExpress.setup(swaggerDocumentation))
+app.use('/v1/api-docs', swaggerUiExpress.serve)
+app.use('/v1/api-docs', swaggerUiExpress.setup(swaggerDocumentation))
 
 // Sử dụng body-parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
