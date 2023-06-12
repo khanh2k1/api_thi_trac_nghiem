@@ -48,7 +48,7 @@ const swaggerDocumentation = {
         summary: "register a new user"
       }
     },
-    
+
     "/login" : {
       post: {
         tags: ["authentication"],
@@ -143,7 +143,7 @@ const swaggerDocumentation = {
     "/result/{id}": {
       get: {
         tags: ["result"],
-        summary: "get all result that user has done"
+        summary: "get result by id result that user has done"
       },
 
       delete: {
