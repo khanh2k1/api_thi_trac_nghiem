@@ -39,13 +39,13 @@ router.patch(
   ExamController.update
 );
 //update questions of exam
-router.patch(
-  "/questions/:_id",
-  AuthMiddlewares.isAuth,
-  ObjectId,
-  requestValidator(ExamSchema.updateQuestions, "body"),
-  ExamController.updateQuestions
-);
+// router.patch(
+//   "/questions/:_id",
+//   AuthMiddlewares.isAuth,
+//   ObjectId,
+//   requestValidator(ExamSchema.updateQuestions, "body"),
+//   ExamController.updateQuestions
+// );
 // delete exam
 router.delete("/:_id", AuthMiddlewares.isAuth, ObjectId, ExamController.deleteExam);
 

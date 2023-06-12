@@ -5,8 +5,9 @@ const requestValidator = require('../validators/Request.validator')
 const UserSchema = require('../schemas/User.schema')
 const ObjectId = require('../validators/ObjectId.validator')
 const FileUtils = require('../utils/File.utils')
+
+
 router.get('/', AuthMiddlewares.isAuth, UserController.getProfile)
 router.patch('/', AuthMiddlewares.isAuth, UserController.changePassword)
-router.post('/')
 router.patch('/update', FileUtils.upload.single('image'), AuthMiddlewares.isAuth, requestValidator(UserSchema.update, "body"), UserController.update)
 module.exports = router

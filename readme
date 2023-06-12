@@ -1,0 +1,13 @@
+Hướng dẫn cách chạy server
+=> bước 1 : tải các package: npm install
+=> bước 2 : chạy server: npm run dev
+
+Sau khi load xong server sẽ chạy ở port 8080, có thể thay đổi port trong file .env
+
+Các api được viết trong file src\helper\documentation.js
+=> mở file này lên để xem các api bằng cách : mở trình duyệt và gõ đường dẫn http://localhost:8080/api-docs
+
+Hướng dẫn cách đưa dữ liệu vào : 
+=> bước 1 : tạo database có tên là thi_trac_nghiem trên mongodb
+=> bước 2 : tạo các collection : users, exams, results
+
