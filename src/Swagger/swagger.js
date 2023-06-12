@@ -10,7 +10,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000', // Địa chỉ máy chủ của ứng dụng của bạn
+        url: 'http://localhost:8080', // Địa chỉ máy chủ của ứng dụng của bạn
       },
     ],
   },
