@@ -5,7 +5,7 @@ const FileUtils = require("../utils/File.utils");
 const ExamController = {
   // get all exam
   getAll: async (req, res) => {
-    await ExamModel.find({ isPublic: true })
+    await ExamModel.find({ isPublic: true }).select('_id examId name description image')
       .then((data) => {
         console.log("get exams successfully");
 
