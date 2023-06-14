@@ -180,8 +180,16 @@ const ExamController = {
   create: async (req, res) => {
 
     console.log('req.body==> ',req.body)
-    
+    console.log('req.file==> ',req.file)
     const exam = await req.body
+
+    if (!req.file) {
+      exam["image"] = ImageDefault;
+      console.log("req.file not found");
+    } else {
+      console.log("req.file found");
+      exam["image"] = FileUtils.base64Image(req.file.buffer);
+    }
 
     if(!exam) {
       console.error('new exam is invalid')
@@ -190,15 +198,6 @@ const ExamController = {
         message:'Invalid exam'
       })
     }
-    
-    if (!req.file) {
-      exam["image"] = ImageDefault;
-      console.log("req.file not found");
-    } else {
-      exam["image"] = FileUtils.base64Image(req.file.buffer);
-    }
-
-    
 
     // Xử lý hình ảnh theo nhu cầu của bạn
     exam["createdBy"] = req.user._id;

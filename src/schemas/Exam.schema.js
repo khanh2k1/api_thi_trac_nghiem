@@ -1,5 +1,4 @@
 const joi = require("joi");
-const ImageSchema = require("./Image.schema");
 // Define the validation schema for the Exam model
 const ExamSchema = {
 
@@ -8,7 +7,7 @@ const ExamSchema = {
     name: joi.string().required().min(3),
     totalTime: joi.number().required(),
     description: joi.string().optional(),
-    image: joi.string(),
+    image: joi.string().allow('', null).optional(),
     questions: joi.string(),
     correctAnswers: joi.string(),
     createdBy: joi.string().hex().length(24),
