@@ -8,6 +8,6 @@ const FileUtils = require('../utils/File.utils')
 
 
 router.get('/', AuthMiddlewares.isAuth, UserController.getProfile)
-router.patch('/', AuthMiddlewares.isAuth, UserController.changePassword)
+router.patch('/', AuthMiddlewares.isAuth, requestValidator(UserSchema.changePassword, "body"), UserController.changePassword)
 router.patch('/update', FileUtils.upload.single('image'), AuthMiddlewares.isAuth, requestValidator(UserSchema.update, "body"), UserController.update)
 module.exports = router

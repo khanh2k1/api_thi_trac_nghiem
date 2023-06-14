@@ -1,46 +1,66 @@
-const mongoose = require("mongoose");
+const { string } = require("joi");
+const conn = require("./src/database/connect");
+const Exam = require("./src/model/Exam.model");
 
-const connectToMongo = async () => {
-  try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/test_speed_query", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("Connected to MongoDB");
-  } catch (err) {
-    console.log(`Failed to connect to MongoDB: ${err}`);
+// conn.connectToMongo()
+
+function generateExams() {
+  let exams = [];
+  for (let i = 0; i < 2; i++) {
+    // 30 exams
+
+    // =====================================
+    const exam = {
+      // 20 questions
+      questions: () => {
+        let questions = [];
+        for (let j = 0; j < 20; j++) {
+          const question = {
+            questionText: `${j}+${j + 1} bằng mấy ?`,
+            answers: () => {
+              let answers = [];
+              for (let i = 0; i < 4; i++) {
+                answers.push(String.valueOf(i));
+              }
+              return answers;
+            },
+          };
+
+          questions.push(question);
+        }
+        return questions;
+      },
+
+      // =====================================
+      correctAnswers: () => {
+        let correctAnswers = [];
+        for (let i = 0; i < 20; i++) {
+          correctAnswers.push(i);
+        }
+        return correctAnswers;
+      },
+      // =====================================
+      isPublic: true,
+      // =====================================
+      createdBy: "64872452847f3efadd07c151",
+    };
+
+    exams.push(exam);
   }
-};
 
-const UserSchema = new mongoose.Schema({
-  username: String,
-  firstname: String,
-  lastname: String,
-  age: Number,
-  email: String,
-});
-
-const User = mongoose.model("users", UserSchema);
-
-async function getAll() {
-  let users = [];
-  // create index
-  // Tạo index trên trường "age"
- await User.createIndexes({ age: 1 });
-  const start = Date.now();
-  users = await (await User.find({ age: { $gte: 18 } }).hint({ age: 1 })).toString()
-   
-   
-  const end = Date.now();
-
-  console.log(users.length);
-  const executionTime = end - start;
-  console.log(executionTime);
+  return exams;
 }
-// Kết nối tới MongoDB và thêm mảng users
-connectToMongo().then(() => {
-  getAll().then(() => {
-    // Công việc hoàn thành, có thể thực hiện các hành động khác tại đây
-    mongoose.connection.close();
-  });
-});
+
+async function printExams() {
+  try {
+    const exams = await generateExams();
+    const questions = exams[0]["questions"];
+    const result = questions();
+    console.log(result);
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+printExams();

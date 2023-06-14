@@ -4,8 +4,6 @@
 const mongoose = require("mongoose");
 const uri = process.env.URI
 const uri_cluster = process.env.URI_CLUSTER
-
-
 console.log(uri_cluster)
 
 const connectToMongo = async () => {
@@ -25,13 +23,13 @@ const closeMongoDBConnection = async () => {
     await client.close();
     console.log("MongoDB connection closed");
   } catch (error) {
+    console.log(error)
   }
 };
 
 
 module.exports = {
   connectToMongo,
-  connection: mongoose.connection,
   closeMongoDBConnection,
 };
 

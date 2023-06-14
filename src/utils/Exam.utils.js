@@ -2,18 +2,12 @@ const { error } = require("../schemas/Image.schema");
 
 const ExamUtils = {
   generateId: () => {
-    let result = "";
-    const characters = "0123456789";
-    const timestamp = Date.now().toString();
-
-    for (let i = 0; i < 10; i++) {
-      const randomChar = characters.charAt(
-        Math.floor(Math.random() * characters.length)
-      );
-      result += randomChar;
+    let numbers = [];
+    for (let i = 0; i < 4; i++) {
+      const randomNumber = Math.floor(Math.random() * 10) + 1;
+      numbers.push(randomNumber);
     }
-
-    return timestamp + result;
+    return String.valueOf(numbers);
   },
 
   parseStringToArrayNumber: (data) => {
