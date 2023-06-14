@@ -4,10 +4,11 @@ const ExamUtils = {
   generateId: () => {
     let numbers = [];
     for (let i = 0; i < 4; i++) {
-      const randomNumber = Math.floor(Math.random() * 10) + 1;
-      numbers.push(randomNumber);
+      const randomNumber = Math.floor(Math.random() * 9) + 1;
+      numbers.push(randomNumber.toString());
     }
-    return String.valueOf(numbers);
+
+    return numbers.toString().replaceAll(",", "");
   },
 
   parseStringToArrayNumber: (data) => {
