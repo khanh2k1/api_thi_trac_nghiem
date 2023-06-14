@@ -7,7 +7,8 @@ const UserSchema = {
     }),
 
     changePassword : joi.object({
-        password: joi.string().required().min(6)
+        old_password: joi.string().required().min(6),
+        password_password: joi.string().required().min(6),
     }),
 }
 
