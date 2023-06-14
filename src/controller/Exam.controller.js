@@ -184,7 +184,7 @@ const ExamController = {
     const exam = await req.body
 
     if (!req.file) {
-      exam["image"] = ImageDefault;
+      exam["image"] = ImageDefault.avatar;
       console.log("req.file not found");
     } else {
       console.log("req.file found");

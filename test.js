@@ -78,7 +78,6 @@ function generateRandomNumbers() {
     }
   
     return result;
-
 }
 
 
