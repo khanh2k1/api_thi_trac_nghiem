@@ -183,13 +183,6 @@ const ExamController = {
     
     const exam = await req.body
 
-    if (!req.file) {
-      exam["image"] = ImageDefault;
-      console.log("req.file not found");
-    } else {
-      exam["image"] = FileUtils.base64Image(req.file.buffer);
-    }
-
     if(!exam) {
       console.error('new exam is invalid')
       return res.staus(422).json({
@@ -197,6 +190,15 @@ const ExamController = {
         message:'Invalid exam'
       })
     }
+    
+    if (!req.file) {
+      exam["image"] = ImageDefault;
+      console.log("req.file not found");
+    } else {
+      exam["image"] = FileUtils.base64Image(req.file.buffer);
+    }
+
+    
 
     // Xử lý hình ảnh theo nhu cầu của bạn
     exam["createdBy"] = req.user._id;
